@@ -4,7 +4,7 @@ const app = express();
 const flash=require("connect-flash")
 var session = require("express-session");
 const passport = require('passport');
-var router = require("./routes/index");
+var router = require("./routes/api");
 const auth=require("./routes/functions/auth")
 require("dotenv").config();
 
@@ -19,6 +19,7 @@ app.use(session({
       secure: false
   }
 }));
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 

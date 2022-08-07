@@ -1,10 +1,12 @@
+<head>
+    <title>Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="stylesheet.css">
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
+</head>
 <div class="container">
     <div class="screen">
         <div class="screen__content">
@@ -73,15 +75,34 @@
         if (user.length == 0) {
             div_username.style.display = "block"
             flag = false
-        }        
-        // console.log(user)
-        // console.log(password_user)
-        // let a=JSON.stringify({
-        //         user,password_user,userType
-        //     })
-        //     let p= JSON.parse(a)
-        //     console.log(p)
-        //     console.log(a)
+        }
+        if(userType=='mentor'){
+            fetch("/loginMentor",{
+            method:'POST',
+            headers:{
+                'Accept':'application/json , text/plain,  */*',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                user,password_user,userType
+            })
+        })    
+        .then((response)=>{
+            console.log(response)
+            if(response.status==200){
+                window.location.href="/dashboard"
+            }
+            else{
+                div_invalidcred.style.display = "block"
+                flag = false
+            }
+        })
+        .catch((error)=>{
+            // div_invalidcred.style.display = "block"
+            // flag = false
+        })
+        }
+        else{        
      fetch("/login",{
             method:'POST',
             headers:{
@@ -106,20 +127,7 @@
             // div_invalidcred.style.display = "block"
             // flag = false
         })
-        
-        // else {
-        //     flag = true
-        // }
-        // console.log("before passcheck=" + flag)
-        // if (!specialCharactercheck(password_user)) {
-        //     div_password.style.display = "block"
-        //     console.log("Password check")
-        //     flag = false
-        // }
-        // else {
-        //     flag = true
-        // }
-        // console.log("after passcheck=" + flag)
+    }
         if (!flag) {
             e.preventDefault();
             return
