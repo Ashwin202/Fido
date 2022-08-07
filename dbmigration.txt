@@ -1,0 +1,5 @@
+--------------------------SQL Queries--------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+create table feedback_accucadets (id int auto_increment, empid varchar(255) not null, name varchar(255)not null, mentorname varchar(255) not null, mentorid varchar(255) not null, domain varchar(255)not null, feedback text not null , primary key(id));
+ALTER TABLE feedback_accucadets
+ADD FOREIGN KEY (empid) REFERENCES login(empid);
