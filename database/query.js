@@ -19,5 +19,8 @@ module.exports = {
     },
     getUser(empid) {
         return `select username, empid from login where empid ="${empid}"`
+    },
+    addFeedback(){
+        
     }
 }

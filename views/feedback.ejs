@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Feedback Form</title>
+</head>
+
+<body>
+    <%- include ('./partials/navbar.ejs') %>
+    <h3 class="text-center" style="margin-top:30px;">Accu-Feedback Form</h3>
+    <div class="container" style="max-width: 800px; margin: 50px auto;">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Name of the Mentor</label>
+                <input type="text" id="mentorname" name="mentorname" class="form-control" aria-describedby="emailHelp"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Mentor ID</label>
+                <input type="text" id="mentorid" name="mentorid" class="form-control" aria-describedby="emailHelp"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Name of the Mentee</label>
+                <input type="text" id="menteename" name="menteename" class="form-control" aria-describedby="emailHelp"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Mentee ID</label>
+                <input type="text" id="menteeid" name="menteerid" class="form-control" aria-describedby="emailHelp"
+                    required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="radio-div">
+                        <label class="radio-label"> Punctuality</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="punctuality" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="punctuality" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="punctuality" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="punctuality" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="punctuality" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+
+
+                    <div class="radio-div">
+                        <label class="radio-label"> Dedication</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dedication" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dedication" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dedication" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dedication" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="dedication" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+
+
+                    <div class="radio-div">
+                        <label class="radio-label"> Behaviour</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="behaviour" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="behaviour" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="behaviour" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="behaviour" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="behaviour" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-div">
+                        <label class="radio-label"> Quality of work</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="work" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="work" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="work" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="work" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="work" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="radio-div">
+                        <label class="radio-label"> Attitude towards studies</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="study" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="study" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="study" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="study" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="study" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+                    <div class="radio-div">
+                        <label class="radio-label"> Questioning skill</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="question" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="question" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="question" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="question" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="question" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+                    <div class="radio-div">
+                        <label class="radio-label"> Willingness to take advice</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="advice" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="advice" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="advice" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="advice" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="advice" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-div">
+                        <label class="radio-label">Active listening skills</label><br>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="listen" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="listen" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="listen" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="listen" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="listen" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <button type="submit" onclick="feedbackValidation()" class="btn btn-primary"
+                style="margin-top: 5px;">Submit</button>
+        </form>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+<style>
+    input[type=radio] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .radio-div {
+        padding-top: 30px;
+    }
+
+    .radio-label {
+        padding-right: 30px;
+        font-size: 16px;
+    }
+</style>
+<script>
+    function feedbackValidation() {
+        let mentorname = document.getElementById("mentorname")
+        let mentorid = document.getElementById("mentorid")
+        let menteename = document.getElementById("menteename")
+        let menteeid = document.getElementById("menteeid")
+        let punctuality = document.querySelector('input[name="punctuality"]:checked') !== null ? document.querySelector('input[name="punctuality"]:checked').value : "0"
+        let dedication = document.querySelector('input[name="dedication"]:checked') !== null ? document.querySelector('input[name="dedication"]:checked').value : "0"
+        let behaviour = document.querySelector('input[name="behaviour"]:checked') !== null ? document.querySelector('input[name="behaviour"]:checked').value : "0"
+        let work = document.querySelector('input[name="work"]:checked') !== null ? document.querySelector('input[name="work"]:checked').value : "0"
+        let question = document.querySelector('input[name="question"]:checked') !== null ? document.querySelector('input[name="question"]:checked').value : "0"
+        let study = document.querySelector('input[name="study"]:checked') !== null ? document.querySelector('input[name="study"]:checked').value : "0"
+        let advice = document.querySelector('input[name="advice"]:checked') !== null ? document.querySelector('input[name="advice"]:checked').value : "0"
+        let listen = document.querySelector('input[name="listen"]:checked') !== null ? document.querySelector('input[name="listen"]:checked').value : "0"
+
+
+        fetch("/feedback", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json , text/plain,  */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                mentorname,
+                mentorid,
+                menteename,
+                menteeid,
+                punctuality,
+                dedication,
+                behaviour,
+                work,
+                question,
+                study,
+                advice,
+                listen
+            })
+        })
+            .then((response) => {
+                console.log(response)
+                if (response.status == 200) {
+                    window.location.href = "/dashboard"
+                }
+                else {
+                    div_invalidcred.style.display = "block"
+                    flag = false
+                }
+            })
+            .catch((error) => {
+                // div_invalidcred.style.display = "block"
+                // flag = false
+            })
+
+    }
+</script>
+
+</html>

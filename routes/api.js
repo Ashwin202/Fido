@@ -19,7 +19,7 @@ router.get("/login", (req, res) => {
         return res.status(200).render("../views/dashboard.ejs", { userData: result })
       })
     }
-    else{
+    else {
       con.query(query.getAllDetails(req.user.empid), (error, result) => {
         return res.status(200).render("../views/dashboard-mentor.ejs", { userData: result })
       })
@@ -53,16 +53,28 @@ router.get('/altFailure', (req, res) => {
 })
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
-  if (sessionData.user.userType == 'guest') {
-    con.query(query.getAllDetailsGuest(req.user.empid), (error, result) => {
-      return res.status(200).render("../views/dashboard.ejs", { userData: result })
-    })
-  }
-  else {
-    con.query(query.getAllDetails(req.user.empid), (error, result) => {
-      return res.status(200).render("../views/dashboard-mentor.ejs", { userData: result })
-    })
-  }
+  con.query(query.getAllDetails(req.user.empid), (error, result) => {
+    return res.status(200).render("../views/dashboard-mentor.ejs", { usertype: sessionData.user.userType, userData: result })
+  })
+})
+router.get("/feedback", ensureAuthenticated, (req, res) => {
+  return res.status(200).render("../views/feedback.ejs")
+})
+router.post("/feedback", (req, res) => {
+  let mentorname = req.body.mentorname
+  let mentorid = req.body.mentorid
+  let menteename = req.body.menteename
+  let menteeid = req.body.menteeid
+  let punctuality = req.body.punctuality
+  let dedication = req.body.dedication
+  let behaviour = req.body.behaviour
+  let work = req.body.work
+  let study = req.body.study
+  let question = req.body.question
+  let advice = req.body.advice
+  let listen = req.body.listen
+
+  // con.query(query.)
 })
 router.get("/logout", (req, res) => {
   req.logout(function (err) {
