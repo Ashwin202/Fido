@@ -84,12 +84,10 @@ console.log(req.body)
     else{
       console.log("Feedback added")   
       res.status(200).json({
-        error: true,
-        message: 'Invalid Special Characters used in Username/Password',
+        error: false,
+        message: 'Feedback added',
         data: {}
     })
-      // response.status(400).json({ error: true, message: 'Agent Inactive' })   
-      // res.status(200).json({message:"SUCCESS"})
       return
       }
   })
