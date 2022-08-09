@@ -20,7 +20,9 @@ module.exports = {
     getUser(empid) {
         return `select username, empid from login where empid ="${empid}"`
     },
-    addFeedback(){
+    addFeedback(empid,name,mentorname,mentorid,domain,feedback,puntuality,dedication,behaviour,work,study,question,advice,listen){
+        return `insert into feedback_accucadets( empid,name,mentorname,mentorid,domain,feedback,puntuality,dedication,behaviour,work,study,question,advice,listen)
+        values("${empid}","${name}","${mentorname}","${mentorid}","${domain}","${feedback}","${puntuality}","${dedication}","${behaviour}","${work}","${study}","${question}","${advice}","${listen}")`
         
     }
 }

@@ -31,15 +31,15 @@ app.use(express.json())
 
 con.connect((err) => {
   if (err) {
-    console.log("Error in connecting the server with  userlogin table");
+    console.log("Error in connecting the server with database"+process.env.DATABASE);
   } else {     
     auth.setStrategies(app);
-    console.log("Database connected to userlogin database");
+    console.log("Database "+process.env.DATABASE+" connected");
   }
 });
 
 app.use("/", router);
 
 app.listen(process.env.PORT, () => {
-  console.log("Server Started");
+  console.log("Server Started at port "+process.env.PORT);
 });
