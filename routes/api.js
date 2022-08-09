@@ -76,7 +76,6 @@ router.post("/feedback", (req, res) => {
   let advice = req.body.advice
   let listen = req.body.listen
   let comments=req.body.comments
-console.log(req.body)
   con.query(query.addFeedback(menteeid,menteename,mentorname,mentorid,domain,comments,punctuality,dedication,behaviour,work,study,question,advice,listen),(err,result)=>{
     if(err){
       console.log(err.message)

@@ -1,137 +1,135 @@
 <head>
-    <title>Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="stylesheet.css">
-
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheet.css">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="/plugins/notification.js" charset=utf-8></script>
 </head>
 <div class="container">
-    <div class="screen">
-        <div class="screen__content">
-            <!-- method="post" action="/login" -->
-            <form class="login" style="margin-top: -50px;">
-                <div class="login__field">
-                    <label>User type :</label>
-                    <select id="user-type" name="user-type" style="width: 130px;   width: 130px;
+  <div class="screen">
+    <div class="screen__content">
+      <!-- method="post" action="/login" -->
+      <form class="login" style="margin-top: -50px;">
+        <div class="login__field">
+          <label>User type :</label>
+          <select id="user-type" name="user-type" style="width: 130px;   width: 130px;
                     background-color: #960000;
                     height: 30px;
                     border: 1px solid bisque;
-                    color: aliceblue;" >
-                        <option value="mentor" name="mentor">Mentor</option>
-                        <option value="guest" name="guest">Guest</option>
-                      </select>
-                </div>
-                <div class="login__field">
-                    <i class="login__icon fas fa-user"></i>
-                    <input type="text" class="login__input" name="username" placeholder="User name / Email"
-                        id="usernames">
-                </div>
-                <div class="login__field">
-                    <i class="login__icon fas fa-lock"></i>
-                    <input type="password" class="login__input" name="password" placeholder="Password"
-                        id="passwordcheck">
-                </div>
-                <div class="alert alert-danger" role="alert" id="namecheck">Enter username!
-                </div>
-                <div class="alert alert-danger" role="alert" id="invalidcred">Invalid Credentials
-                </div>
-                <div class="alert alert-danger" role="alert" id="passcheck">Enter a special character in password
-                </div>
-                <button class="button login__submit" onclick="validation(event)">
-                    <span class="button__text">Log In Now</span>
+                    color: aliceblue;">
+            <option value="mentor" name="mentor">Mentor</option>
+            <option value="guest" name="guest">Guest</option>
+          </select>
+        </div>
+        <div class="login__field">
+          <i class="login__icon fas fa-user"></i>
+          <input type="text" class="login__input" name="username" placeholder="User name / Email" id="usernames">
+        </div>
+        <div class="login__field">
+          <i class="login__icon fas fa-lock"></i>
+          <input type="password" class="login__input" name="password" placeholder="Password" id="passwordcheck">
+        </div>
+        <div class="alert alert-danger" role="alert" id="namecheck">Enter username!
+        </div>
+        <div class="alert alert-danger" role="alert" id="invalidcred">Invalid Credentials
+        </div>
+        <div class="alert alert-danger" role="alert" id="passcheck">Enter a special character in password
+        </div>
+        <button class="button login__submit" onclick="validation(event)">
+          <span class="button__text">Log In Now</span>
 
-                    <i class="button__icon fas fa-chevron-right"></i>
-                </button>
-            </form>            
-        </div>
-        <div class="screen__background">
-            <span class="screen__background__shape screen__background__shape4"></span>
-            <span class="screen__background__shape screen__background__shape3"></span>
-            <span class="screen__background__shape screen__background__shape2"></span>
-            <span class="screen__background__shape screen__background__shape1"></span>
-        </div>
+          <i class="button__icon fas fa-chevron-right"></i>
+        </button>
+      </form>
     </div>
+    <div class="screen__background">
+      <span class="screen__background__shape screen__background__shape4"></span>
+      <span class="screen__background__shape screen__background__shape3"></span>
+      <span class="screen__background__shape screen__background__shape2"></span>
+      <span class="screen__background__shape screen__background__shape1"></span>
+    </div>
+  </div>
 </div>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
-    function specialCharactercheck(str) {
-        {
-            const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-            return specialChars.test(str);
-        }
+  function specialCharactercheck(str) {
+    {
+      const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      return specialChars.test(str);
     }
+  }
 
-    function validation(e) {
-        flag = false
-        let div_username = document.getElementById("namecheck")
-        let div_invalidcred = document.getElementById("invalidcred")
-        let div_password = document.getElementById("passcheck")
-        let user = document.getElementById("usernames").value
-        let password_user = document.getElementById("passwordcheck").value
-        let userType=document.getElementById("user-type").value
-        console.log(userType)
-        if (user.length == 0) {
-            div_username.style.display = "block"
+  function validation(e) {
+    flag = false
+    let div_username = document.getElementById("namecheck")
+    let div_invalidcred = document.getElementById("invalidcred")
+    let div_password = document.getElementById("passcheck")
+    let user = document.getElementById("usernames").value
+    let password_user = document.getElementById("passwordcheck").value
+    let userType = document.getElementById("user-type").value
+    if (user.length == 0) {
+      div_username.style.display = "block"
+      flag = false
+    }
+    if (userType == 'mentor') {
+      fetch("/loginMentor", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json , text/plain,  */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user,
+            password_user,
+            userType
+          })
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            window.location.href = "/dashboard"
+          } else {
+            div_invalidcred.style.display = "block"
+            demo.showNotification("left", "bottom", "Invalid Credentials")
             flag = false
-        }
-        if(userType=='mentor'){
-            fetch("/loginMentor",{
-            method:'POST',
-            headers:{
-                'Accept':'application/json , text/plain,  */*',
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                user,password_user,userType
-            })
-        })    
-        .then((response)=>{
-            console.log(response)
-            if(response.status==200){
-                window.location.href="/dashboard"
-            }
-            else{
-                div_invalidcred.style.display = "block"
-                flag = false
-            }
+          }
         })
-        .catch((error)=>{
-            // div_invalidcred.style.display = "block"
-            // flag = false
+        .catch((error) => {
+          // div_invalidcred.style.display = "block"
+          // flag = false
         })
-        }
-        else{        
-     fetch("/login",{
-            method:'POST',
-            headers:{
-                'Accept':'application/json , text/plain,  */*',
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                user,password_user,userType
-            })
-        })    
-        .then((response)=>{
-            console.log(response)
-            if(response.status==200){
-                window.location.href="/dashboard"
-            }
-            else{
-                div_invalidcred.style.display = "block"
-                flag = false
-            }
+    } else {
+      fetch("/login", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json , text/plain,  */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user,
+            password_user,
+            userType
+          })
         })
-        .catch((error)=>{
-            // div_invalidcred.style.display = "block"
-            // flag = false
+        .then((response) => {
+          if (response.status == 200) {
+            window.location.href = "/dashboard"
+          } else {
+            demo.showNotification("left", "bottom", "Invalid Credentials")
+            div_invalidcred.style.display = "block"
+            flag = false
+          }
+        })
+        .catch((error) => {
+          // div_invalidcred.style.display = "block"
+          // flag = false
         })
     }
-        if (!flag) {
-            e.preventDefault();
-            return
-        }
+    if (!flag) {
+      e.preventDefault();
+      return
     }
-    
+  }
 </script>

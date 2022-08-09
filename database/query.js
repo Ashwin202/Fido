@@ -12,10 +12,12 @@ module.exports = {
         return `select * from feedback_accucadets `
     },
     getLoginGuest(username) {
-        return `select password,empid from login where username ="${username}"`
+        // return `select password,empid from login where username ="${username}"`
+        return `select password,empid from login where username="${username}" and type="guest"`
     },
     getLoginMentor(username) {
-        return `SELECT * from  login INNER JOIN mentorTable ON login.empid=mentorTable.mentorId where username="${username}";`
+        return `select * from login where username="${username}" and type="mentor"`
+        // return `SELECT * from  login INNER JOIN mentorTable ON login.empid=mentorTable.mentorId where username="${username}";`
     },
     getUser(empid) {
         return `select username, empid from login where empid ="${empid}"`

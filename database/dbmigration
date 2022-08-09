@@ -12,3 +12,4 @@ ALTER TABLE feedback_accucadets add column puntuality varchar(255)
 ALTER TABLE feedback_accucadets add column dedication varchar(255), 
 add column behaviour varchar(255),add column work varchar(255) ,add column study varchar(255),
 add column question varchar(255),add column advice varchar(255),add column listen varchar(255) 
+alter table login add column type varchar(255)
