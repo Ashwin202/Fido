@@ -1,15 +1,18 @@
  --------------------------SQL Queries--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------Ashwin---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE feedback_accucadets (id int auto_increment, empid varchar(255) not null, name varchar(255)not null, mentorname varchar(255) not null, mentorid varchar(255) not null, domain varchar(255)not null, feedback text not null , primary key(id));
-CREATE TABLE login (empid varchar(255) not null, username varchar(255) not null, password varchar(255) not null primary key(empid))
-CREATE TABLE mentorTable (mentorId varchar(255) not null, username varchar(255) not null, primary key(mentorId))
-ALTER TABLE feedback_accucadets ADD FOREIGN KEY (empid) REFERENCES login(empid);
-ALTER TABLE mentorTable ADD FOREIGN KEY (mentorId) REFERENCES login(empid);
-ALTER TABLE feedback_accucadets add column puntuality varchar(255)
+CREATE DATABASE feedback
+CREATE TABLE feedback.feedback_accucadets (id int auto_increment, empid varchar(255) not null, name varchar(255)not null, mentorname varchar(255) not null, mentorid varchar(255) not null, domain varchar(255)not null, feedback text not null , primary key(id));
+CREATE TABLE feedback.login (empid varchar(255) not null, username varchar(255) not null, password varchar(255) not null primary key(empid))
+CREATE TABLE feedback.mentorTable (mentorId varchar(255) not null, username varchar(255) not null, primary key(mentorId))
+ALTER TABLE feedback.feedback_accucadets ADD FOREIGN KEY (empid) REFERENCES login(empid);
+ALTER TABLE feedback.mentorTable ADD FOREIGN KEY (mentorId) REFERENCES login(empid);
+ALTER TABLE feedback.feedback_accucadets add column puntuality varchar(255)
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-ALTER TABLE feedback_accucadets add column dedication varchar(255), 
+ALTER TABLE feedback.feedback_accucadets add column dedication varchar(255), 
 add column behaviour varchar(255),add column work varchar(255) ,add column study varchar(255),
 add column question varchar(255),add column advice varchar(255),add column listen varchar(255) 
-alter table login add column type varchar(255)
+alter table feedback.login add column type varchar(255)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

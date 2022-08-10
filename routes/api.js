@@ -52,6 +52,10 @@ router.get('/altFailure', (req, res) => {
   res.status(401).json({ error: req.flash('error')[0] })
 })
 
+router.get('/register',(req,res)=>{
+  return res.status(200).render("../views/register.ejs")
+})
+
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   con.query(query.getAllDetails(req.user.empid), (error, result) => {
     console.log(sessionData.user.userType)
