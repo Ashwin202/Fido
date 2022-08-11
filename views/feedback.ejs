@@ -334,13 +334,15 @@
             }, 2000);
             demo.showNotification("left", "bottom", "Feedback added successfully")
             //   window.location.href = "/dashboard"
-          } else {
+          } 
+          else {
             demo.showNotification("left", "bottom", "Error in adding the feedback!")
             flag = false
           }
         })
         .catch((error) => {
           console.log(error)
+          
         })
     }
   }

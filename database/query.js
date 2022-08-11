@@ -26,5 +26,9 @@ module.exports = {
         return `insert into feedback_accucadets( empid,name,mentorname,mentorid,domain,feedback,puntuality,dedication,behaviour,work,study,question,advice,listen)
         values("${empid}","${name}","${mentorname}","${mentorid}","${domain}","${feedback}","${puntuality}","${dedication}","${behaviour}","${work}","${study}","${question}","${advice}","${listen}")`
         
+    },
+    register(empid,username,password,type){
+        return `insert into login (empid,username,password,type) values("${empid}","${username}","${password}","${type}")`
     }
+    
 }

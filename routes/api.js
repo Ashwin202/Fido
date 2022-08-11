@@ -56,6 +56,33 @@ router.get('/register',(req,res)=>{
   return res.status(200).render("../views/register.ejs")
 })
 
+router.post ('/register',(req,respo)=>{
+  let name = req.body.name;
+  let userType = req.body.userType;
+  let id = req.body.id;
+  let domain = req.body.domain;
+  let username = req.body.username;
+  let password = req.body.password;
+  let hash=bcrypt.hashSync(password, 10);
+ con.query(query.register(id,username,hash,userType),(err,res)=>{
+    if(err){
+      console.log(err.message)
+      respo.status(400).json({ error: req.flash('error')[0] })
+    }
+    else{
+      console.log("Register Successfull")   
+      respo.status(200).json({
+        error: false,
+        message: 'Resgistration added',
+        data: {}
+    })
+      return
+      }
+    }
+  )
+
+})
+
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   con.query(query.getAllDetails(req.user.empid), (error, result) => {
     console.log(sessionData.user.userType)
@@ -66,20 +93,20 @@ router.get("/feedback", ensureAuthenticated, (req, res) => {
   return res.status(200).render("../views/feedback.ejs")
 })
 router.post("/feedback", (req, res) => {
-  let mentorname = req.body.mentorname
-  let mentorid = req.body.mentorid
-  let menteename = req.body.menteename
-  let menteeid = req.body.menteeid
-  let domain = req.body.domain
-  let punctuality = req.body.punctuality
-  let dedication = req.body.dedication
-  let behaviour = req.body.behaviour
-  let work = req.body.work
-  let study = req.body.study
-  let question = req.body.question
-  let advice = req.body.advice
-  let listen = req.body.listen
-  let comments=req.body.comments
+  let mentorname = req.body.mentorname;
+  let mentorid = req.body.mentorid;
+  let menteename = req.body.menteename;
+  let menteeid = req.body.menteeid;
+  let domain = req.body.domain;
+  let punctuality = req.body.punctuality;
+  let dedication = req.body.dedication;
+  let behaviour = req.body.behaviour;
+  let work = req.body.work;
+  let study = req.body.study;
+  let question = req.body.question;
+  let advice = req.body.advice;
+  let listen = req.body.listen;
+  let comments=req.body.comments;
   con.query(query.addFeedback(menteeid,menteename,mentorname,mentorid,domain,comments,punctuality,dedication,behaviour,work,study,question,advice,listen),(err,result)=>{
     if(err){
       console.log(err.message)
