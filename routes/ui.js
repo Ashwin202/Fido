@@ -161,7 +161,10 @@ router.get("/dashboard", (req, res) => {
 router.get("/settings", async(request, response) => {
    const domainList = await runQuery(query.getDomainList())
    const formList = await runQuery(query.getForms())
-   return response.status(200).render("../views/layouts/settings.ejs", {domainList, formList});
+   const mentorList = await runQuery(query.allMentors())
+   const groupList = await runQuery(query.allGroups())
+
+   return response.status(200).render("../views/layouts/settings.ejs", {domainList, formList, mentorList, groupList});
 });
 router.get("/feedback", (req, res) => {
    return res.status(200).render("../views/feedback.ejs");

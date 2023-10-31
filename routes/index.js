@@ -13,6 +13,7 @@ router.get('/form/:id', controller.getFormController)
 router.post('/form', controller.addFormController)
 router.put('/form/:id', controller.updateFormController)
 router.patch('/form/:id', controller.deleteFormController)
+router.post('/groups', controller.addGroupController)
 
 router.use('/admins', adminRouter)
 router.use('/mentors', mentorRouter)

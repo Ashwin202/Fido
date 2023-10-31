@@ -64,4 +64,16 @@ module.exports = {
     deleteForm(){
         return `UPDATE fido.form SET is_deleted = 1 where id= ?;`
     },
+    allMentors(){
+        return `SELECT * from fido.user where user_type=1;`
+    },
+    allGroups(){
+        return `SELECT * from fido.groups where active=1;`
+    },
+    addGroup(){
+        return `INSERT INTO fido.groups (name, user_list, created_by, active)
+        VALUES (?, ?, ?, 1)
+        ON DUPLICATE KEY UPDATE
+            user_list = VALUES(user_list);`
+    },
 }

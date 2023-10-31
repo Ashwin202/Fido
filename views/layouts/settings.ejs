@@ -8,7 +8,7 @@
 
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
@@ -42,189 +42,26 @@
             </ul>
          </div>
       </nav>
-      <div class="m-2">
-         <div class="row">
-            <!-- <div class="col-md-12"> -->
-            <div class="col-md-6 mt-1">
-               <div class="card card-rounded p-2">
-                  <div class="col-12">
-                     <div class="row">
-                        <div style="flex: 5">
-                           <img class="icon-align-center add-icon" src="../assets/img/light.png" width="30px" />
-                        </div>
-                        <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Domain</div>
-                        <div style="flex: 5">
-                           <img class="add-icon" data-toggle="modal" data-target="#add-domain-modal" src="../assets/img/plus.png" width="30px" />
-                        </div>
-                     </div>
-                     <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
-                        <% for(let i=0; i < domainList.length; i++) { %>
-                        <div class="row">
-                           <div style="flex: 5"></div>
-                           <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=domainList[i].value %></div>
-                           <div style="flex: 15">
-                              <img
-                                 class="edit-icon"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 title="Edit"
-                                 data-toggle="modal"
-                                 data-target="#edit-domain-modal"
-                                 onclick="editDomain('<%=domainList[i].id %>')"
-                                 src="../assets/img/edit.png"
-                                 width="20px" />
-                              <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteDomain('<%=domainList[i].id %>')" src="../assets/img/delete.png" width="20px" />
-                           </div>
-                        </div>
-                        <% } %>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="edit-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Domain</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        <div class="row">
-                           <div class="col-12">
-                              <div class="form-group">
-                                 <label for="exampleInputEmail1">Domain</label>
-                                 <input type="text" class="form-control" id="domain" placeholder="Enter Name" />
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" class="btn btn-primary" onclick="saveDomain()">Save changes</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="modal fade" id="add-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Domain</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        <div class="row">
-                           <div class="col-12">
-                              <div class="form-group">
-                                 <label for="exampleInputEmail1">Domain</label>
-                                 <input type="text" class="form-control" id="input-domain" placeholder="Enter Domain" />
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" class="btn btn-primary" onclick="addDomain()">Add Domain</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="modal fade" id="add-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog modal-xl" style="max-width: 800px">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        <div class="form-group">
-                           <label for="exampleInputEmail1">Form Name</label>
-                           <input type="text" class="form-control" id="form-name" placeholder="Enter Name" />
-                        </div>
-                        <div id="form-creator" style="min-height: 100px"></div>
-                        <div class="fb-render" style="min-height: 100px"></div>
-                     </div>
-                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" id="save-form" class="btn btn-primary">Save Form</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="modal fade" id="edit-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog modal-xl" style="max-width: 800px">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        <div class="form-group">
-                           <label for="exampleInputEmail1">Form Name</label>
-                           <input type="text" class="form-control" id="form-edit-name" placeholder="Enter Name" />
-                        </div>
-                        <div id="form-editor" style="min-height: 100px"></div>
-                     </div>
-                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" id="save-edited-form" class="btn btn-primary">Save Form</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <!-- Modal Ends -->
-            <div class="col-md-6">
-               <div class="card card-rounded p-2">
-                  <div class="col-12">
-                     <div class="row">
-                        <div style="flex: 5">
-                           <img class="icon-align-center add-icon" src="../assets/img/forms.png" width="30px" />
-                        </div>
-                        <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Forms</div>
-                        <div style="flex: 5">
-                           <img class="add-icon" data-toggle="modal" data-target="#add-form-modal" onclick="initialiseForms()" src="../assets/img/plus.png" width="30px" />
-                        </div>
-                     </div>
-                     <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
-                        <% for(let i=0; i < formList.length; i++) { %>
-                        <div class="row">
-                           <div style="flex: 5"></div>
-                           <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=formList[i].name %></div>
-                           <div style="flex: 15">
-                              <img
-                                 class="edit-icon"
-                                 data-toggle="tooltip"
-                                 data-placement="top"
-                                 title="Edit"
-                                 data-toggle="modal"
-                                 data-target="#edit-form-modal"
-                                 onclick="editForm('<%=formList[i].id %>')"
-                                 src="../assets/img/edit.png"
-                                 width="20px" />
-                              <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteForm('<%=formList[i].id %>')" src="../assets/img/delete.png" width="20px" />
-                           </div>
-                        </div>
-                        <% } %>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+<div class="m-3">
+   <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Configuration Hub</button>
+        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Users</button>
       </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">   <%- include ('../../views/partials/configuration.ejs') %></div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/users.ejs') %></div>
+    </div>
+
+</div>
+ 
       <style>
+         .line {
+  flex-grow: 1;
+  border-top: 1px solid #000;
+  margin: 0 10px; /* Add margin for spacing between the line and text */
+}
          /* Width of the scrollbar */
          ::-webkit-scrollbar {
             width: 6px; /* Adjusted width */
@@ -276,9 +113,12 @@
    </body>
 
    <script>
+      $(document).ready(function () {
+         $.noConflict();
+      })
       let selectedDomainID;
       const editDomain = (id) => {
-         $.noConflict();
+         // $.noConflict();
          $("#edit-domain-modal").modal("show");
          selectedDomainID = id;
          fetch(`/api/domain?id=${id}`, {
@@ -293,7 +133,7 @@
             });
       };
       const editForm = (id) => {
-         $.noConflict();
+         // $.noConflict();
          $("#edit-form-modal").modal("show");
          selectedDomainID = id;
          fetch(`/api/form/${id}`, {
@@ -314,11 +154,11 @@
                      formData.name = document.getElementById("form-edit-name").value;
                      formData.value = formBuilder.actions.getData("json");
                      if (!formData.name || formData.name == "") {
-                        $.noConflict();
+                        // $.noConflict();
                         return demo.showNotification("bottom", "bottom", "Please Enter Name", 4);
                      }
                      if (!formData.value || formData.value == "[]") {
-                        $.noConflict();
+                        // $.noConflict();
                         return demo.showNotification("bottom", "bottom", "Please Add Controls", 4);
                      }
                      fetch(`/api/form/${id}`, {
@@ -377,7 +217,7 @@
             .then((response) => response.json())
             .then((response) => {
                response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding domain!") : demo.showNotification("left", "bottom", "Domain added");
-               $.noConflict();
+               // $.noConflict();
                $("#add-domain-modal").modal("hide");
                location.reload();
                return;
@@ -447,7 +287,7 @@
                   .then((response) => response.json())
                   .then((response) => {
                      response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding form!") : demo.showNotification("left", "bottom", "Form added");
-                     $.noConflict();
+                     // $.noConflict();
                      $("#add-form-modal").modal("hide");
                      location.reload();
                      return;
@@ -467,5 +307,51 @@
             });
          });
       };
+      
+      // Groups
+
+      document.getElementById("search-group").addEventListener("input", function() {
+        const searchValue = this.value.toLowerCase();
+        const checkboxes = document.querySelectorAll(".form-check");
+
+        checkboxes.forEach(function(checkbox) {
+            const label = checkbox.querySelector(".form-check-label");
+            const labelText = label.textContent.toLowerCase();
+            if (labelText.includes(searchValue)) {
+                checkbox.style.display = "block";
+            } else {
+                checkbox.style.display = "none";
+            }
+        });
+    });
+
+    const addGroup = ()=>{
+      const groupName = document.getElementById("input-group").value
+      const hasDomainGroup = document.getElementById("domain-group").checked
+       let checkedAgentIDList = [];
+       const checkboxes = document.querySelectorAll(".form-check-input:checked");
+       checkboxes.forEach(function(checkbox) {
+           checkedAgentIDList.push(checkbox.value);
+       });
+       if((checkedAgentIDList.length==0 || groupName == "") && !hasDomainGroup )
+       demo.showNotification("left", "bottom", "Add a atleast one member to the group");
+       fetch(`/api/groups?hasDomainGroup=${hasDomainGroup}`, {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     checkedAgentIDList,
+                     groupName
+                  }),
+               })
+                  .then((response) => response.json())
+                  .then((response) => {
+                     response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding group !") : demo.showNotification("left", "bottom", "Group added");
+                     $("#add-groups-modal").modal("hide");
+                     // location.reload();
+                     return;
+                  });
+    }
    </script>
 </html>
