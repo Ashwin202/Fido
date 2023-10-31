@@ -1,18 +1,80 @@
- --------------------------SQL Queries--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--------------------------Ashwin---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------SQL Queries--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE DATABASE feedback
-CREATE TABLE feedback.feedback_accucadets (id int auto_increment, empid varchar(255) not null, name varchar(255)not null, mentorname varchar(255) not null, mentorid varchar(255) not null, domain varchar(255)not null, feedback text not null , primary key(id));
-CREATE TABLE feedback.login (empid varchar(255) not null, username varchar(255) not null, password varchar(255) not null primary key(empid))
-CREATE TABLE feedback.mentorTable (mentorId varchar(255) not null, username varchar(255) not null, primary key(mentorId))
-ALTER TABLE feedback.feedback_accucadets ADD FOREIGN KEY (empid) REFERENCES login(empid);
-ALTER TABLE feedback.mentorTable ADD FOREIGN KEY (mentorId) REFERENCES login(empid);
-ALTER TABLE feedback.feedback_accucadets add column puntuality varchar(255)
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-ALTER TABLE feedback.feedback_accucadets add column dedication varchar(255), 
-add column behaviour varchar(255),add column work varchar(255) ,add column study varchar(255),
-add column question varchar(255),add column advice varchar(255),add column listen varchar(255) 
-alter table feedback.login add column type varchar(255)
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE DATABASE fido
+CREATE TABLE
+    fido.user (
+        `id` int auto_increment,
+        `emailID` varchar(255) not null,
+        `firstname` varchar(255) not null,
+        `lastname` varchar(255) not null,
+        `user_type` int not null,
+        `domain` int,
+        `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+        primary key(id)
+    );
+
+CREATE TABLE fido.domain (
+    `id` int not null auto_increment primary key,
+    `value` varchar(255) not null,
+    `created_by` int not null,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `is_deleted` TINYINT DEFAULT 0,
+    FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
+);
+CREATE TABLE fido.form (
+    `id` int not null auto_increment primary key,
+    `name` varchar(255) not null UNIQUE,
+    `value` text not null,
+    `created_by` int not null,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `is_deleted` TINYINT DEFAULT 0,
+    FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
+);
+
+ALTER TABLE user ADD FOREIGN KEY (domain) REFERENCES domain(id);
+CREATE TABLE
+    fido.login (
+        empid varchar(255) not null,
+        username varchar(255) not null,
+        password varchar(255) not null primary key(empid)
+    )
+CREATE TABLE
+    fido.mentorTable (
+        mentorId varchar(255) not null,
+        username varchar(255) not null,
+        primary key(mentorId)
+    )
+ALTER TABLE
+    fido.feedback_accucadets
+ADD
+    FOREIGN KEY (empid) REFERENCES login(empid);
+
+ALTER TABLE fido.mentorTable
+ADD
+    FOREIGN KEY (mentorId) REFERENCES login(empid);
+
+ALTER TABLE
+    fido.feedback_accucadets
+add
+    column puntuality varchar(255) ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE
+    fido.feedback_accucadets
+add
+    column dedication varchar(255),
+add
+    column behaviour varchar(255),
+add column work varchar(255),
+add column study varchar(255),
+add
+    column question varchar(255),
+add column advice varchar(255),
+add column listen varchar(255)
+alter table fido.login
+add
+    column type varchar(255) ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
+
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+
+      <script src="/plugins/notification.js" charset="utf-8"></script>
+      <title>Dashboard-Mentor</title>
+   </head>
+
+   <body style="overflow-x: hidden">
+      <nav class="navbar navbar-expand-lg navbar-light">
+         <a class="navbar-brand" href="#">Fido</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
+                  <a class="nav-link" href="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link" href="/settings" style="cursor: pointer">Settings</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" id="feedbacks" style="cursor: pointer" onclick="feedback()">Add Feedback</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/logout">Signout</a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <div class="m-2">
+         <div class="row">
+            <!-- <div class="col-md-12"> -->
+            <div class="col-md-6 mt-1">
+               <div class="card p-2">
+                  <div class="col-12">
+                     <div class="row">
+                        <div style="flex: 5">
+                           <img class="icon-align-center" src="../assets/img/light.png" width="30px" />
+                        </div>
+                        <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Domain</div>
+                        <div style="flex: 5">
+                           <img data-toggle="modal" data-target="#add-domain-modal" src="../assets/img/plus.png" width="30px" />
+                        </div>
+                     </div>
+                     <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
+                        <% for(let i=0; i < domainList.length; i++) { %>
+                        <div class="row">
+                           <div style="flex: 5"></div>
+                           <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=domainList[i].value %></div>
+                           <div style="flex: 15">
+                              <img data-toggle="modal" data-target="#edit-domain-modal" onclick="editDomain('<%=domainList[i].id %>')" src="../assets/img/edit.png" width="20px" />
+                              <img class="ml-1" onclick="deleteDomain('<%=domainList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                           </div>
+                        </div>
+                        <% } %>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="edit-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Domain</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="row">
+                           <div class="col-12">
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Domain</label>
+                                 <input type="text" class="form-control" id="domain" placeholder="Enter Name" />
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" class="btn btn-primary" onclick="saveDomain()">Save changes</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="modal fade" id="add-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Domain</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="row">
+                           <div class="col-12">
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Domain</label>
+                                 <input type="text" class="form-control" id="input-domain" placeholder="Enter Domain" />
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" class="btn btn-primary" onclick="addDomain()">Add Domain</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="modal fade" id="add-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-xl" style="max-width: 800px">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Form Name</label>
+                           <input type="text" class="form-control" id="form-name" placeholder="Enter Name" />
+                        </div>
+                        <div id="form-creator" style="min-height: 100px"></div>
+                        <div class="fb-render" style="min-height: 100px"></div>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" id="save-form" class="btn btn-primary">Save Form</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal fade" id="edit-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-xl" style="max-width: 800px">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Form Name</label>
+                           <input type="text" class="form-control" id="form-edit-name" placeholder="Enter Name" />
+                        </div>
+                        <div id="form-editor" style="min-height: 100px"></div>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" id="save-edited-form" class="btn btn-primary">Save Form</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Modal Ends -->
+            <div class="col-md-6">
+               <div class="card p-2">
+                  <div class="col-12">
+                     <div class="row">
+                        <div style="flex: 5">
+                           <img class="icon-align-center" src="../assets/img/forms.png" width="30px" />
+                        </div>
+                        <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Forms</div>
+                        <div style="flex: 5">
+                           <img data-toggle="modal" data-target="#add-form-modal" onclick="initialiseForms()" src="../assets/img/plus.png" width="30px" />
+                        </div>
+                     </div>
+                     <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
+                        <% for(let i=0; i < formList.length; i++) { %>
+                        <div class="row">
+                           <div style="flex: 5"></div>
+                           <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=formList[i].name %></div>
+                           <div style="flex: 15">
+                              <img data-toggle="modal" data-target="#edit-form-modal" onclick="editForm('<%=formList[i].id %>')" src="../assets/img/edit.png" width="20px" />
+                              <img class="ml-1" onclick="deleteForm('<%=formList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                           </div>
+                        </div>
+                        <% } %>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <style>
+         /* Width of the scrollbar */
+         ::-webkit-scrollbar {
+            width: 6px; /* Adjusted width */
+         }
+
+         /* Handle on hover */
+         ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+         }
+
+         /* Handle on active */
+         ::-webkit-scrollbar-thumb:active {
+            background: #777;
+         }
+
+         /* Track */
+         ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+         }
+
+         /* Handle */
+         ::-webkit-scrollbar-thumb {
+            background: #888;
+         }
+      </style>
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
+      <script type="text/javascript" src="../assets/js/form-render.min.js"></script>
+   </body>
+
+   <script>
+      let selectedDomainID;
+      const editDomain = (id) => {
+         selectedDomainID = id;
+         fetch(`/api/domain?id=${id}`, {
+            method: "GET",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               const domain = response.data.value;
+               if (response.error) return demo.shwNotification("left", "bottom", "Something went wrong! Please add again!");
+               document.getElementById("domain").value = domain;
+               return;
+            });
+      };
+      const editForm = (id) => {
+         selectedDomainID = id;
+         fetch(`/api/form/${id}`, {
+            method: "GET",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               const formDetails = response.data;
+               console.log({formDetails})
+               if (response.error) return demo.shwNotification("left", "bottom", "Something went wrong! Please edit again!");
+               document.getElementById("form-edit-name").value = formDetails.name;
+               jQuery($x => {
+                    document.getElementById('form-editor').innerHTML = ""
+                    const fbTemplate = document.getElementById('form-editor');
+                    const formBuilder = $x(fbTemplate).formBuilder({ ...fbOptions, formData: response.data.value });
+
+                    document.getElementById('save-edited-form').addEventListener('click', function () {
+                        const formData = {}
+                        formData.name = document.getElementById("form-edit-name").value
+                        formData.value = formBuilder.actions.getData('json')
+                        if (!formData.name || formData.name == '') {
+                            $.noConflict();
+                            return demo.showNotification('bottom', 'bottom', "Please Enter Name", 4);
+                        }
+                        if (!formData.value || formData.value == '[]') {
+                            $.noConflict();
+                            return demo.showNotification('bottom', 'bottom', "Please Add Controls", 4);
+                        }
+console.log({ formData})
+                        fetch(`/api/form/${id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData),
+                        }).then((response) => response.json())
+                            .then((data) => {
+                                if (data.error) {
+                                    demo.showNotification('bottom', 'bottom', data.message);
+                                } else {
+                                    demo.showNotification('bottom', 'bottom', "Form Updated Successfully");
+                                    $.noConflict();
+                                    $("#edit-form-modal").modal("hide");
+                                    location.reload();
+                                }
+                            })
+                    });
+                })
+               return;
+            });
+      };
+      const saveDomain = () => {
+         const domain = document.getElementById("domain").value;
+         fetch(`/api/domain/${selectedDomainID}`, {
+            method: "PUT",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               domain,
+            }),
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on update!") : demo.showNotification("left", "bottom", "Domain updateed");
+               $.noConflict();
+               $("#edit-domain-modal").modal("hide");
+               location.reload();
+               return;
+            });
+      };
+      const addDomain = () => {
+         const domain = document.getElementById("input-domain").value;
+         fetch(`/api/domain/`, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               domain,
+            }),
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding domain!") : demo.showNotification("left", "bottom", "Domain added");
+               $.noConflict();
+               $("#add-domain-modal").modal("hide");
+               location.reload();
+               return;
+            });
+      };
+
+      const deleteDomain = (id) => {
+         fetch(`/api/domain/${id}`, {
+            method: "PATCH",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on delete!") : demo.showNotification("left", "bottom", "Domain deleted successfully");
+               location.reload();
+               return;
+            });
+      };
+      const deleteForm = (id) => {
+         fetch(`/api/form/${id}`, {
+            method: "PATCH",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on delete!") : demo.showNotification("left", "bottom", "Form deleted successfully");
+               location.reload();
+               return;
+            });
+      };
+      
+      
+      const fields = [
+         {
+            label: "DateTime",
+            type: "text",
+            subtype: "datetime-local",
+            icon: "⏰", //html emoji
+         },
+      ];
+      const fbOptions = {
+         fields: fields,
+         subtypes: {
+            text: ["datetime-local"],
+         },
+         disabledAttrs: ["access", "className", "description", "inline", "name", "other", "step", "style", "toggle"],
+         disabledActionButtons: ["data", "clear", "save"],
+         disableFields: ["autocomplete", "button", "file", "header", "hidden"],
+      };
+      const initialiseForms = (id) => {
+         jQuery(function ($x) {
+            document.getElementById("form-creator").innerHTML = "";
+            const fbTemplate = document.getElementById("form-creator");
+            const formBuilder = $x(fbTemplate).formBuilder(fbOptions);
+            const data = formBuilder.actions.getData("json");
+            document.getElementById("save-form").addEventListener("click", function () {
+               const formData = {};
+               formData.name = document.getElementById("form-name").value;
+               formData.value = formBuilder.actions.getData("json");
+
+               console.log({ data: formBuilder.actions.getData("json") });
+               fetch(`/api/form/`, {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     formData,
+                  }),
+               })
+                  .then((response) => response.json())
+                  .then((response) => {
+                    response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding form!") : demo.showNotification("left", "bottom", "Form added");
+                    $.noConflict();
+                    $("#add-form-modal").modal("hide");
+                    location.reload();
+                    return;
+                  });
+               // const fbRender = $('.fb-render').formRender({
+               //                 formData: formBuilder.actions.getData('json')
+               //             });
+               // if (!formData.name || formData.name == '') {
+               //     return demo.showNotification('bottom', 'bottom', "Please Enter Name", 4);
+               // }
+               // if (!formData.input_fields || formData.input_fields == '[]') {
+               //     return demo.showNotification('bottom', 'bottom', "Please Add Controls", 4);
+               // }
+               // if (JSON.parse(formData.input_fields).length > 10) {
+               //     return demo.showNotification('bottom', 'bottom', "Maximum field limit exceeded. Only 10 fields are allowed", 4);
+               // }
+            });
+         });
+      };
+   </script>
+</html>

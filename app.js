@@ -2,30 +2,34 @@ var express = require("express");
 var mysql = require("mysql");
 const app = express();
 const flash=require("connect-flash")
-var session = require("express-session");
+// var session = require("express-session");
 const passport = require('passport');
-var router = require("./routes/api");
+var uiRouter = require("./routes/ui");
+var apiRouter = require("./routes");
 const auth=require("./routes/functions/auth")
 require("dotenv").config();
 
 var con = require("./database/db");
 const bodyParser = require("body-parser");
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-      secure: false
-  }
-}));
+
+app.use(bodyParser.json())
+
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: true,
+//   saveUninitialized: true,
+//   cookie: {
+//       secure: false
+//   }
+// }));
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
 app.use(flash());
-app.use(passport.initialize())
-app.use(passport.session());
+// app.use(passport.initialize())
+// app.use(passport.session());
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
@@ -38,7 +42,8 @@ con.connect((err) => {
   }
 });
 
-app.use("/", router);
+app.use("/", uiRouter);
+app.use("/api/", apiRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("Server Started at port "+process.env.PORT);

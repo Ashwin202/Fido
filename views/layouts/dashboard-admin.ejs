@@ -1,203 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+      <script type="text/javascript" src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+      <script src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
 
-  <script type="text/javascript" src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-  <script src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
-  
-  <script src="/plugins/notification.js" charset=utf-8></script>
-  <title>Dashboard-Mentor</title>
-</head>
+      <script src="/plugins/notification.js" charset="utf-8"></script>
+      <title>Dashboard-Mentor</title>
+   </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="#">Fido</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+   <body>
+      <nav class="navbar navbar-expand-lg navbar-light">
+         <a class="navbar-brand" href="#">Fido</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/settings" style="cursor:pointer;" onclick="feedback()">Settings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="feedbacks" style="cursor:pointer;" onclick="feedback()">Add Feedback</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Signout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/settings" style="cursor: pointer" onclick="feedback()">Settings</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" id="feedbacks" style="cursor: pointer" onclick="feedback()">Add Feedback</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/logout">Signout</a>
+               </li>
+            </ul>
+         </div>
+      </nav>
 
-  <div class="container" style="max-width: 1600px;">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="d-flex justify-content-end  ">
-          <!-- Example single danger button -->
-          <div class="btn-group dropleft m-1">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Actions
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-mentor-modal">Add Mentor</a>
-              <a class="dropdown-item" href="#">Add Mentee</a>
-            </div>
-          </div>
-          <!-- Modal -->
-          <div class="modal fade" id="add-mentor-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Mentor</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">First Name</label>
-                        <input type="text" class="form-control" id="fname" placeholder="Enter Name">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter Email">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
-                        <input type="email" class="form-control" id="lname" placeholder="Enter Lastname">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleFormControlSelect1">Domain</label>
-                        <select class="form-control" id="domain">
-                          <% for(let i=0; i < domainList.length; i++) { %>
-                            <option value='<%=domainList[i].id %>'>
-                              <%=domainList[i].value %>
-                            </option>
-                            <% } %>
-                        </select>
-                      </div>
-                    </div>
+      <div class="container" style="max-width: 1600px">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="d-flex justify-content-end">
+                  <!-- Example single danger button -->
+                  <div class="btn-group dropleft m-1">
+                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-mentor-modal">Add Mentor</a>
+                        <a class="dropdown-item" href="#">Add Mentee</a>
+                     </div>
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                  <button type="button" class="btn btn-primary" onclick="addMentor()">Save changes</button>
-                </div>
-              </div>
+                  <!-- Modal -->
+                  <div class="modal fade" id="add-mentor-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add Mentor</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                           </div>
+                           <div class="modal-body">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">First Name</label>
+                                       <input type="text" class="form-control" id="fname" placeholder="Enter Name" />
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">Email address</label>
+                                       <input type="email" class="form-control" id="email" placeholder="Enter Email" />
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">Last Name</label>
+                                       <input type="email" class="form-control" id="lname" placeholder="Enter Lastname" />
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="exampleFormControlSelect1">Domain</label>
+                                       <select class="form-control" id="domain">
+                                          <% for(let i=0; i < domainList.length; i++) { %>
+                                          <option value="<%=domainList[i].id %>"><%=domainList[i].value %></option>
+                                          <% } %>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                              <button type="button" class="btn btn-primary" onclick="addMentor()">Save changes</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Modal Ends -->
+               </div>
+               <div id="campaign-list-table">
+                  <table class="table table-striped table-bordered custom-table" id="mentor-table" style="width: 100%; white-space: nowrap"></table>
+               </div>
             </div>
-          </div>
-          <!-- Modal Ends -->
-        </div>
-        <div id="campaign-list-table">
-          <table class="table table-striped table-bordered custom-table" id="mentor-table"
-            style="width:100%; white-space: nowrap;"></table>
-        </div>
+         </div>
       </div>
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
       <script>
-        $(document).ready(function () {
-          const campaignTable = new DataTable('#mentor-table', {
-            // data: data,
-            ajax: {
-              url: '/api/mentors/',
-              type: 'GET',
-              dataSrc: function (json) {
-                console.log({ data: json.data })
-                return json.data;
-              }
-            },
-            responsive: true,
-            pageLength: 25,
-            paging: true,
-            autoWidth: true,
-            deferRender: true,
-            order: [],
-            initComplete: function (settings, json) {
-              $('#loader-bg').remove();
-              $('div.dataTables_filter input').attr('autocomplete', 'off').css('font-size', 14);
-            },
-            columns: [
-              {
-                data: 'lastname',
-                title: 'Full Name',
-                render: (data, type, row, meta) => {
-                  return `<span title="${data}">${row.firstname} ${row.lastname}</span>`
-                }
-              },
-              { data: 'emailID', title: 'Contact', responsivePriority: 3, width: "20%", },
-              { data: 'user_type', title: 'Domain', responsivePriority: 3, width: "20%", }
-            ]
-          });
-        })
-        const addMentor = () => {
-          const fname = document.getElementById("fname").value
-          const lname = document.getElementById("lname").value
-          const email = document.getElementById("email").value
-          const domain = document.getElementById("domain").value
-          console.log(fname,
-            lname,
-            email,
-            domain)
-          fetch("/api/mentors", {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              fname,
-              lname,
-              email,
-              domain
+         $(document).ready(function () {
+            const campaignTable = new DataTable("#mentor-table", {
+               // data: data,
+               ajax: {
+                  url: "/api/mentors/",
+                  type: "GET",
+                  dataSrc: function (json) {
+                     console.log({ data: json.data });
+                     return json.data;
+                  },
+               },
+               responsive: true,
+               pageLength: 25,
+               paging: true,
+               autoWidth: true,
+               deferRender: true,
+               order: [],
+               initComplete: function (settings, json) {
+                  $("#loader-bg").remove();
+                  $("div.dataTables_filter input").attr("autocomplete", "off").css("font-size", 14);
+               },
+               columns: [
+                  {
+                     data: "lastname",
+                     title: "Full Name",
+                     render: (data, type, row, meta) => {
+                        return `<span title="${data}">${row.firstname} ${row.lastname}</span>`;
+                     },
+                  },
+                  { data: "emailID", title: "Contact", responsivePriority: 3, width: "20%" },
+                  { data: "domain", title: "Domain", responsivePriority: 3, width: "20%" },
+               ],
+            });
+         });
+         const addMentor = () => {
+            const fname = document.getElementById("fname").value;
+            const lname = document.getElementById("lname").value;
+            const email = document.getElementById("email").value;
+            const domain = document.getElementById("domain").value;
+            console.log(fname, lname, email, domain);
+            fetch("/api/mentors", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                  fname,
+                  lname,
+                  email,
+                  domain,
+               }),
             })
-
-
-          }).then((response) => response.json())
-        .then((response) => {
-          response.error ? 
-          demo.showNotification('left', 'bottom', "Something went wrong! Please add again!"): demo.showNotification('left', 'bottom', "Added Mentor.")
-          $('#add-mentor-modal').modal('hide')
-            return
-        })
-
-      }
+               .then((response) => response.json())
+               .then((response) => {
+                  response.error ? demo.showNotification("left", "bottom", "Something went wrong! Please add again!") : demo.showNotification("left", "bottom", "Added Mentor.");
+                  $("#add-mentor-modal").modal("hide");
+                  return;
+               });
+         };
       </script>
-</body>
-
+   </body>
 </html>

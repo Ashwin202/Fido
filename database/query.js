@@ -29,6 +29,39 @@ module.exports = {
     },
     register(empid,username,password,type){
         return `insert into login (empid,username,password,type) values("${empid}","${username}","${password}","${type}")`
-    }
-    
+    },
+
+
+
+
+    getDomainList(){
+        return `SELECT * from fido.domain where is_deleted=0;`
+    },
+    getDomain(){
+        return `SELECT * from fido.domain where id = ?;`
+    },
+    updateDomain(){
+        return `UPDATE fido.domain SET value = ?  where id= ?;`
+    },
+    deleteDomain(){
+        return `UPDATE fido.domain SET is_deleted = 1 where id= ?;`
+    },
+    addDomain(){
+        return `INSERT INTO fido.domain SET value = ?, created_by=?;`
+    },
+    addForm(){
+        return `INSERT INTO fido.form SET name = ?, value = ?, created_by=?;`
+    },
+    getForms(){
+        return `SELECT * from fido.form where is_deleted=0;`
+    },
+    getForm(){
+        return `SELECT * from fido.form where id = ?;`
+    },
+    updateForm(){
+        return `UPDATE fido.form SET name = ?, value = ?, created_by = ?  where id= ?;`
+    },
+    deleteForm(){
+        return `UPDATE fido.form SET is_deleted = 1 where id= ?;`
+    },
 }
