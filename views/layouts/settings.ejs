@@ -278,6 +278,8 @@
    <script>
       let selectedDomainID;
       const editDomain = (id) => {
+         $.noConflict();
+         $("#edit-domain-modal").modal("show");
          selectedDomainID = id;
          fetch(`/api/domain?id=${id}`, {
             method: "GET",
@@ -291,6 +293,8 @@
             });
       };
       const editForm = (id) => {
+         $.noConflict();
+         $("#edit-form-modal").modal("show");
          selectedDomainID = id;
          fetch(`/api/form/${id}`, {
             method: "GET",
@@ -330,7 +334,7 @@
                               demo.showNotification("bottom", "bottom", data.message);
                            } else {
                               demo.showNotification("bottom", "bottom", "Form Updated Successfully");
-                              $.noConflict();
+                              // $.noConflict();
                               $("#edit-form-modal").modal("hide");
                               location.reload();
                            }
@@ -354,7 +358,6 @@
             .then((response) => response.json())
             .then((response) => {
                response.error ? demo.showNotification("left", "bottom", "Something went wrong on update!") : demo.showNotification("left", "bottom", "Domain updateed");
-               $.noConflict();
                $("#edit-domain-modal").modal("hide");
                location.reload();
                return;
