@@ -46,15 +46,15 @@
          <div class="row">
             <!-- <div class="col-md-12"> -->
             <div class="col-md-6 mt-1">
-               <div class="card p-2">
+               <div class="card card-rounded p-2">
                   <div class="col-12">
                      <div class="row">
                         <div style="flex: 5">
-                           <img class="icon-align-center" src="../assets/img/light.png" width="30px" />
+                           <img class="icon-align-center add-icon" src="../assets/img/light.png" width="30px" />
                         </div>
                         <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Domain</div>
                         <div style="flex: 5">
-                           <img data-toggle="modal" data-target="#add-domain-modal" src="../assets/img/plus.png" width="30px" />
+                           <img class="add-icon" data-toggle="modal" data-target="#add-domain-modal" src="../assets/img/plus.png" width="30px" />
                         </div>
                      </div>
                      <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
@@ -63,8 +63,17 @@
                            <div style="flex: 5"></div>
                            <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=domainList[i].value %></div>
                            <div style="flex: 15">
-                              <img data-toggle="modal" data-target="#edit-domain-modal" onclick="editDomain('<%=domainList[i].id %>')" src="../assets/img/edit.png" width="20px" />
-                              <img class="ml-1" onclick="deleteDomain('<%=domainList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                              <img
+                                 class="edit-icon"
+                                 data-toggle="tooltip"
+                                 data-placement="top"
+                                 title="Edit"
+                                 data-toggle="modal"
+                                 data-target="#edit-domain-modal"
+                                 onclick="editDomain('<%=domainList[i].id %>')"
+                                 src="../assets/img/edit.png"
+                                 width="20px" />
+                              <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteDomain('<%=domainList[i].id %>')" src="../assets/img/delete.png" width="20px" />
                            </div>
                         </div>
                         <% } %>
@@ -178,15 +187,15 @@
 
             <!-- Modal Ends -->
             <div class="col-md-6">
-               <div class="card p-2">
+               <div class="card card-rounded p-2">
                   <div class="col-12">
                      <div class="row">
                         <div style="flex: 5">
-                           <img class="icon-align-center" src="../assets/img/forms.png" width="30px" />
+                           <img class="icon-align-center add-icon" src="../assets/img/forms.png" width="30px" />
                         </div>
                         <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Forms</div>
                         <div style="flex: 5">
-                           <img data-toggle="modal" data-target="#add-form-modal" onclick="initialiseForms()" src="../assets/img/plus.png" width="30px" />
+                           <img class="add-icon" data-toggle="modal" data-target="#add-form-modal" onclick="initialiseForms()" src="../assets/img/plus.png" width="30px" />
                         </div>
                      </div>
                      <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
@@ -195,8 +204,17 @@
                            <div style="flex: 5"></div>
                            <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=formList[i].name %></div>
                            <div style="flex: 15">
-                              <img data-toggle="modal" data-target="#edit-form-modal" onclick="editForm('<%=formList[i].id %>')" src="../assets/img/edit.png" width="20px" />
-                              <img class="ml-1" onclick="deleteForm('<%=formList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                              <img
+                                 class="edit-icon"
+                                 data-toggle="tooltip"
+                                 data-placement="top"
+                                 title="Edit"
+                                 data-toggle="modal"
+                                 data-target="#edit-form-modal"
+                                 onclick="editForm('<%=formList[i].id %>')"
+                                 src="../assets/img/edit.png"
+                                 width="20px" />
+                              <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteForm('<%=formList[i].id %>')" src="../assets/img/delete.png" width="20px" />
                            </div>
                         </div>
                         <% } %>
@@ -230,6 +248,20 @@
          /* Handle */
          ::-webkit-scrollbar-thumb {
             background: #888;
+         }
+
+         .card-rounded {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         }
+         .edit-icon:hover {
+            filter: invert(17%) sepia(54%) saturate(802%) hue-rotate(189deg) brightness(96%) contrast(88%);
+         }
+         .delete-icon:hover {
+            filter: invert(43%) sepia(53%) saturate(3576%) hue-rotate(328deg) brightness(93%) contrast(95%);
+         }
+         .add-icon:hover {
+            filter: invert(16%) sepia(70%) saturate(7301%) hue-rotate(268deg) brightness(84%) contrast(83%);
          }
       </style>
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -266,46 +298,45 @@
             .then((response) => response.json())
             .then((response) => {
                const formDetails = response.data;
-               console.log({formDetails})
                if (response.error) return demo.shwNotification("left", "bottom", "Something went wrong! Please edit again!");
                document.getElementById("form-edit-name").value = formDetails.name;
-               jQuery($x => {
-                    document.getElementById('form-editor').innerHTML = ""
-                    const fbTemplate = document.getElementById('form-editor');
-                    const formBuilder = $x(fbTemplate).formBuilder({ ...fbOptions, formData: response.data.value });
+               jQuery(($x) => {
+                  document.getElementById("form-editor").innerHTML = "";
+                  const fbTemplate = document.getElementById("form-editor");
+                  const formBuilder = $x(fbTemplate).formBuilder({ ...fbOptions, formData: response.data.value });
 
-                    document.getElementById('save-edited-form').addEventListener('click', function () {
-                        const formData = {}
-                        formData.name = document.getElementById("form-edit-name").value
-                        formData.value = formBuilder.actions.getData('json')
-                        if (!formData.name || formData.name == '') {
-                            $.noConflict();
-                            return demo.showNotification('bottom', 'bottom', "Please Enter Name", 4);
-                        }
-                        if (!formData.value || formData.value == '[]') {
-                            $.noConflict();
-                            return demo.showNotification('bottom', 'bottom', "Please Add Controls", 4);
-                        }
-console.log({ formData})
-                        fetch(`/api/form/${id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(formData),
-                        }).then((response) => response.json())
-                            .then((data) => {
-                                if (data.error) {
-                                    demo.showNotification('bottom', 'bottom', data.message);
-                                } else {
-                                    demo.showNotification('bottom', 'bottom', "Form Updated Successfully");
-                                    $.noConflict();
-                                    $("#edit-form-modal").modal("hide");
-                                    location.reload();
-                                }
-                            })
-                    });
-                })
+                  document.getElementById("save-edited-form").addEventListener("click", function () {
+                     const formData = {};
+                     formData.name = document.getElementById("form-edit-name").value;
+                     formData.value = formBuilder.actions.getData("json");
+                     if (!formData.name || formData.name == "") {
+                        $.noConflict();
+                        return demo.showNotification("bottom", "bottom", "Please Enter Name", 4);
+                     }
+                     if (!formData.value || formData.value == "[]") {
+                        $.noConflict();
+                        return demo.showNotification("bottom", "bottom", "Please Add Controls", 4);
+                     }
+                     fetch(`/api/form/${id}`, {
+                        method: "PUT",
+                        headers: {
+                           "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formData),
+                     })
+                        .then((response) => response.json())
+                        .then((data) => {
+                           if (data.error) {
+                              demo.showNotification("bottom", "bottom", data.message);
+                           } else {
+                              demo.showNotification("bottom", "bottom", "Form Updated Successfully");
+                              $.noConflict();
+                              $("#edit-form-modal").modal("hide");
+                              location.reload();
+                           }
+                        });
+                  });
+               });
                return;
             });
       };
@@ -372,8 +403,7 @@ console.log({ formData})
                return;
             });
       };
-      
-      
+
       const fields = [
          {
             label: "DateTime",
@@ -402,7 +432,6 @@ console.log({ formData})
                formData.name = document.getElementById("form-name").value;
                formData.value = formBuilder.actions.getData("json");
 
-               console.log({ data: formBuilder.actions.getData("json") });
                fetch(`/api/form/`, {
                   method: "POST",
                   headers: {
@@ -414,11 +443,11 @@ console.log({ formData})
                })
                   .then((response) => response.json())
                   .then((response) => {
-                    response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding form!") : demo.showNotification("left", "bottom", "Form added");
-                    $.noConflict();
-                    $("#add-form-modal").modal("hide");
-                    location.reload();
-                    return;
+                     response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding form!") : demo.showNotification("left", "bottom", "Form added");
+                     $.noConflict();
+                     $("#add-form-modal").modal("hide");
+                     location.reload();
+                     return;
                   });
                // const fbRender = $('.fb-render').formRender({
                //                 formData: formBuilder.actions.getData('json')
