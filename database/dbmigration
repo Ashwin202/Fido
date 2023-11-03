@@ -44,9 +44,20 @@ CREATE TABLE fido.groups (
     `active` TINYINT DEFAULT 0,
     FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
 );
+CREATE TABLE fido.team (
+    `id` int not null auto_increment primary key,
+    `name` varchar(255) not null UNIQUE,
+    `user_list` json not null,
+    `created_by` int not null,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `active` TINYINT DEFAULT 1,
+    FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
+);
 ALTER TABLE fido.form ADD COLUMN `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP; 
 
 ALTER TABLE user ADD FOREIGN KEY (domain) REFERENCES domain(id);
+ALTER TABLE `fido.user` ADD COLUMN `team` DEFAULT NULL;
 CREATE TABLE
     fido.login (
         empid varchar(255) not null,
