@@ -117,6 +117,8 @@
          $.noConflict();
       })
       let selectedDomainID;
+      let selectedTeamID;
+      let selectedGroupID;
       const editDomain = (id) => {
          // $.noConflict();
          $("#edit-domain-modal").modal("show");
@@ -324,6 +326,20 @@
             }
         });
     });
+      document.getElementById("search-mentee").addEventListener("input", function() {
+        const searchValue = this.value.toLowerCase();
+        const checkboxes = document.querySelectorAll(".form-check");
+
+        checkboxes.forEach(function(checkbox) {
+            const label = checkbox.querySelector(".form-check-label");
+            const labelText = label.textContent.toLowerCase();
+            if (labelText.includes(searchValue)) {
+                checkbox.style.display = "block";
+            } else {
+                checkbox.style.display = "none";
+            }
+        });
+    });
 
     const addGroup = ()=>{
       const groupName = document.getElementById("input-group").value
@@ -353,5 +369,162 @@
                      return;
                   });
     }
+    const addTeam = ()=>{
+      const teamName = document.getElementById("input-team").value
+       let checkedUserIDList = [];
+       const checkboxes = document.querySelectorAll(".form-check-input:checked");
+       checkboxes.forEach(function(checkbox) {
+           checkedUserIDList.push(checkbox.value);
+       });
+       if((checkedUserIDList.length==0 || teamName == ""))
+       return demo.showNotification("left", "bottom", "Add a atleast one member to the group");
+       fetch(`/api/team`, {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     checkedUserIDList,
+                     teamName
+                  }),
+               })
+                  .then((response) => response.json())
+                  .then((response) => {
+                     response.error ? demo.showNotification("left", "bottom", "Something went wrong on adding group !") : demo.showNotification("left", "bottom", "Group added");
+                     $("#add-team-modal").modal("hide");
+                     location.reload();
+                     return;
+                  });
+    }
+   
+   
+   const editTeam = (id)=>{
+      $("#edit-team-modal").modal("show");
+      selectedTeamID = id
+      fetch(`/api/team?id=${id}`, {
+            method: "GET",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               const teamName = response.data.name;
+               if (response.error) return demo.shwNotification("left", "bottom", "Something went wrong! Please add again!");
+               document.getElementById("input-team-name-edit").value = teamName;
+               if(response.data.user_list){
+                  parsedTeamData = JSON.parse(response.data.user_list) 
+                  for(const id of parsedTeamData) {
+                     const checkbox = document.getElementById(`team-edit-${id}`);
+                      if(checkbox) {
+                          checkbox.checked = true;
+                      }
+                  }
+               }
+               return;
+            });
+   }
+   
+   const saveTeam = () => {
+      const teamName = document.getElementById("input-team-name-edit").value
+       let checkedUserIDListOnEdit = [];
+       const checkboxes = document.querySelectorAll(".team-edit:checked");
+       checkboxes.forEach(function(checkbox) {
+           checkedUserIDListOnEdit.push(checkbox.value);
+       });
+       if(teamName == "")
+       return demo.showNotification("left", "bottom", "Add a Team Name");
+         fetch(`/api/team/${selectedTeamID}`, {
+            method: "PUT",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               checkedUserIDListOnEdit,
+               teamName
+            }),
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on update!") : demo.showNotification("left", "bottom", "Team updateed");
+               $("#edit-team-modal").modal("hide");
+               location.reload();
+               return;
+            });
+      };
+
+      const deleteTeam = (id) => {
+         fetch(`/api/team/${id}`, {
+            method: "PATCH",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on delete!") : demo.showNotification("left", "bottom", "Team deleted successfully");
+               location.reload();
+               return;
+            });
+      };
+   
+   
+      const editGroup = (id)=>{
+      $("#edit-group-modal").modal("show");
+      selectedGroupID = id
+      fetch(`/api/group?id=${id}`, {
+            method: "GET",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               const groupName = response.data.name;
+               if (response.error) return demo.shwNotification("left", "bottom", "Something went wrong! Please add again!");
+               document.getElementById("input-group-name-edit").value = groupName;
+               if(response.data.user_list){
+                  parsedTeamData = JSON.parse(response.data.user_list) 
+                  for(const id of parsedTeamData) {
+                     const checkbox = document.getElementById(`group-edit-${id}`);
+                      if(checkbox) {
+                          checkbox.checked = true;
+                      }
+                  }
+               }
+               return;
+            });
+   }
+
+   const saveGroup = () => {
+      const groupName = document.getElementById("input-group-name-edit").value
+       let checkedUserIDListOnEdit = [];
+       const checkboxes = document.querySelectorAll(".group-edit:checked");
+       checkboxes.forEach(function(checkbox) {
+           checkedUserIDListOnEdit.push(checkbox.value);
+       });
+       if(groupName == "")
+       return demo.showNotification("left", "bottom", "Add a Group Name");
+         fetch(`/api/group/${selectedGroupID}`, {
+            method: "PUT",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               checkedUserIDListOnEdit,
+               groupName
+            }),
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on update!") : demo.showNotification("left", "bottom", "Team updateed");
+               $("#edit-group-modal").modal("hide");
+               location.reload();
+               return;
+            });
+      };
+
+      const deleteGroup = (id) => {
+         fetch(`/api/group/${id}`, {
+            method: "PATCH",
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               response.error ? demo.showNotification("left", "bottom", "Something went wrong on delete!") : demo.showNotification("left", "bottom", "Group deleted successfully");
+               location.reload();
+               return;
+            });
+      };
    </script>
 </html>

@@ -15,8 +15,8 @@
                   <div class="btn-group dropleft m-1">
                      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#add-mentor-modal">Add Mentor</a>
-                        <a class="dropdown-item" href="#">Add Mentee</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#add-mentor-modal">Add Mentor</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#add-mentee-modal">Add Mentee</a>
                      </div>
                   </div>
                   <!-- Modal -->
@@ -60,6 +60,50 @@
                            <div class="modal-footer">
                               <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                               <button type="button" class="btn btn-primary" onclick="addMentor()">Save changes</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal fade" id="add-mentee-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add Mentee</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                           </div>
+                           <div class="modal-body">
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">First Name</label>
+                                       <input type="text" class="form-control" id="mentee-fname" placeholder="Enter Name" />
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">Email address</label>
+                                       <input type="email" class="form-control" id="mentee-email" placeholder="Enter Email" />
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                       <label for="exampleInputEmail1">Last Name</label>
+                                       <input type="email" class="form-control" id="mentee-lname" placeholder="Enter Lastname" />
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="exampleFormControlSelect1">Domain</label>
+                                       <select class="form-control" id="mentee-team">
+                                          <% for(let i=0; i < teamList.length; i++) { %>
+                                          <option value="<%=teamList[i].id %>"><%=teamList[i].value %></option>
+                                          <% } %>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                              <button type="button" class="btn btn-primary" onclick="addMentee()">Save changes</button>
                            </div>
                         </div>
                      </div>
@@ -137,4 +181,29 @@
                   return;
                });
          };
-      </script>
+         const addMentee = () => {
+            const fname = document.getElementById("mentee-fname").value;
+            const lname = document.getElementById("mentee-lname").value;
+            const email = document.getElementById("mentee-email").value;
+         const domain = document.getElementById("mentee-team").value != '' ?document.getElementById("mentee-team").value : null;
+            fetch("/api/mentees", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                  fname,
+                  lname,
+                  email,
+                  domain,
+               }),
+            })
+               .then((response) => response.json())
+               .then((response) => {
+                  response.error ? demo.showNotification("left", "bottom", "Something went wrong! Please add again!") : demo.showNotification("left", "bottom", "Added Mentee.");
+                  $("#add-mentee-modal").modal("hide");
+                  return;
+               });
+         };
+    
+    </script>

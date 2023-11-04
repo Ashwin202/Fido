@@ -162,9 +162,11 @@ router.get("/settings", async(request, response) => {
    const domainList = await runQuery(query.getDomainList())
    const formList = await runQuery(query.getForms())
    const mentorList = await runQuery(query.allMentors())
+   const menteeList = await runQuery(query.allMentees())
    const groupList = await runQuery(query.allGroups())
+   const teamList = await runQuery(query.allTeams())
 
-   return response.status(200).render("../views/layouts/settings.ejs", {domainList, formList, mentorList, groupList});
+   return response.status(200).render("../views/layouts/settings.ejs", {domainList, formList, mentorList, groupList, menteeList, teamList});
 });
 router.get("/feedback", (req, res) => {
    return res.status(200).render("../views/feedback.ejs");

@@ -42,7 +42,7 @@
                    <div style="flex: 5">
                       <img class="icon-align-center add-icon" src="../assets/img/groups.png" width="30px" />
                    </div>
-                   <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Groups</div>
+                   <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Mentor Groups</div>
                    <div style="flex: 5">
                       <img class="add-icon" data-toggle="modal" data-target="#add-groups-modal" src="../assets/img/plus.png" width="30px" />
                    </div>
@@ -62,11 +62,11 @@
                                   data-placement="top"
                                   title="Edit"
                                   data-toggle="modal"
-                                  data-target="#edit-domain-modal"
-                                  onclick="editDomain('<%=groupList[i].id %>')"
+                                  data-target="#edit-group-modal"
+                                  onclick="editGroup('<%=groupList[i].id %>')"
                                   src="../assets/img/edit.png"
                                   width="20px" />
-                               <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteDomain('<%=groupList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                               <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteGroup('<%=groupList[i].id %>')" src="../assets/img/delete.png" width="20px" />
                             </div>
                          </div>
                       <% } %>
@@ -76,157 +76,6 @@
           </div>
        </div>
 
-       <!-- Modal -->
-       <div class="modal fade" id="edit-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-             <div class="modal-content">
-                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Edit Domain</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                   </button>
-                </div>
-                <div class="modal-body">
-                   <div class="row">
-                      <div class="col-12">
-                         <div class="form-group">
-                            <label for="exampleInputEmail1">Domain</label>
-                            <input type="text" class="form-control" id="domain" placeholder="Enter Name" />
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="modal-footer">
-                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                   <button type="button" class="btn btn-primary" onclick="saveDomain()">Save changes</button>
-                </div>
-             </div>
-          </div>
-       </div>
-
-       <div class="modal fade" id="add-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-             <div class="modal-content">
-                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Add Domain</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                   </button>
-                </div>
-                <div class="modal-body">
-                   <div class="row">
-                      <div class="col-12">
-                         <div class="form-group">
-                            <label for="exampleInputEmail1">Domain</label>
-                            <input type="text" class="form-control" id="input-domain" placeholder="Enter Domain" />
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="modal-footer">
-                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                   <button type="button" class="btn btn-primary" onclick="addDomain()">Add Domain</button>
-                </div>
-             </div>
-          </div>
-       </div>
-
-       <div class="modal fade" id="add-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl" style="max-width: 800px">
-             <div class="modal-content">
-                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                   </button>
-                </div>
-                <div class="modal-body">
-                   <div class="form-group">
-                      <label for="exampleInputEmail1">Form Name</label>
-                      <input type="text" class="form-control" id="form-name" placeholder="Enter Name" />
-                   </div>
-                   <div id="form-creator" style="min-height: 100px"></div>
-                   <div class="fb-render" style="min-height: 100px"></div>
-                </div>
-                <div class="modal-footer">
-                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                   <button type="button" id="save-form" class="btn btn-primary">Save Form</button>
-                </div>
-             </div>
-          </div>
-       </div>
-       <div class="modal fade" id="edit-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl" style="max-width: 800px">
-             <div class="modal-content">
-                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                   </button>
-                </div>
-                <div class="modal-body">
-                   <div class="form-group">
-                      <label for="exampleInputEmail1">Form Name</label>
-                      <input type="text" class="form-control" id="form-edit-name" placeholder="Enter Name" />
-                   </div>
-                   <div id="form-editor" style="min-height: 100px"></div>
-                </div>
-                <div class="modal-footer">
-                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                   <button type="button" id="save-edited-form" class="btn btn-primary">Save Form</button>
-                </div>
-             </div>
-          </div>
-       </div>
-       <div class="modal fade" id="add-groups-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-             <div class="modal-content">
-                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Add Groups</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                   </button>
-                </div>
-                <div class="modal-body">
-                   <div class="row">
-                      <div class="col-12">
-                         <div class="form-group">
-                            <label for="exampleInputEmail1">Group Name</label>
-                            <input type="text" class="form-control" id="input-group" placeholder="Enter Domain" />
-                         </div>
-                         <div class="card card-rounded p-2">
-                            <div class="form-group">
-                               <label for="exampleInputEmail1">Select Mentors</label>
-                               <input type="text" class="form-control" id="search-group" placeholder="Search...">
-                             </div>
-                             <% for(let i=0; i < mentorList.length; i++) { %>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox"  value='<%=mentorList[i].id %>'>
-                                <label class="form-check-label" for="inlineCheckbox1"><%=mentorList[i].firstname %></label>
-                            </div>
-                            <% } %>
-                        </div>
-                        <div class="container d-flex justify-content-center align-items-center mt-2">
-                            <div class="line"></div>
-                            <div class="px-2">OR</div>
-                            <div class="line"></div>
-                          </div>
-                          
-                        <div class="form-check m-1">
-                            <input class="form-check-input" id="domain-group" type="checkbox" value='true'>
-                            <label class="form-check-label" for="inlineCheckbox1">Create group automaticaly with all the domains</label>
-                        </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="modal-footer">
-                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                   <button type="button" class="btn btn-primary" onclick="addGroup()">Add Group</button>
-                </div>
-             </div>
-          </div>
-       </div>
-       <!-- Modal Ends -->
        <div class="col-md-6">
           <div class="card card-rounded p-2 mt-1">
              <div class="col-12">
@@ -262,6 +111,310 @@
                 </div>
              </div>
           </div>
+          <div class="card card-rounded p-2 mt-1">
+            <div class="col-12">
+               <div class="row">
+                  <div style="flex: 5">
+                     <img class="icon-align-center add-icon" src="../assets/img/groups.png" width="30px" />
+                  </div>
+                  <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 90; padding: 0 10px; font-weight: 600">Mentee Team</div>
+                  <div style="flex: 5">
+                     <img class="add-icon" data-toggle="modal" data-target="#add-team-modal" src="../assets/img/plus.png" width="30px" />
+                  </div>
+               </div>
+               <div style="height: 165px; overflow-y: auto; overflow-x: hidden">
+                  <% if(teamList.length==0) { %>
+                     <p class="text-center">No Team are added!</p>
+                 <% } else { %>
+                     <% for(let i=0; i < teamList.length; i++) { %>
+                        <div class="row">
+                           <div style="flex: 5"></div>
+                           <div class="opensans-lg-bold mb-3" style="color: #1d253b; flex: 80; padding: 0 10px; font-weight: 400"><%=teamList[i].name %></div>
+                           <div style="flex: 15">
+                              <img
+                                 class="edit-icon"
+                                 data-toggle="tooltip"
+                                 data-placement="top"
+                                 title="Edit"
+                                 data-toggle="modal"
+                                 data-target="#edit-team-modal"
+                                 onclick="editTeam('<%=teamList[i].id %>')"
+                                 src="../assets/img/edit.png"
+                                 width="20px" />
+                              <img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteTeam('<%=teamList[i].id %>')" src="../assets/img/delete.png" width="20px" />
+                           </div>
+                        </div>
+                     <% } %>
+                 <% } %>
+               </div>
+            </div>
+          </div>
        </div>
     </div>
  </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="edit-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Domain</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Domain</label>
+                           <input type="text" class="form-control" id="domain" placeholder="Enter Name" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="saveDomain()">Save changes</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="add-domain-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Domain</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Domain</label>
+                           <input type="text" class="form-control" id="input-domain" placeholder="Enter Domain" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="addDomain()">Add Domain</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="add-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-xl" style="max-width: 800px">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label for="exampleInputEmail1">Form Name</label>
+                     <input type="text" class="form-control" id="form-name" placeholder="Enter Name" />
+                  </div>
+                  <div id="form-creator" style="min-height: 100px"></div>
+                  <div class="fb-render" style="min-height: 100px"></div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" id="save-form" class="btn btn-primary">Save Form</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-xl" style="max-width: 800px">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label for="exampleInputEmail1">Form Name</label>
+                     <input type="text" class="form-control" id="form-edit-name" placeholder="Enter Name" />
+                  </div>
+                  <div id="form-editor" style="min-height: 100px"></div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" id="save-edited-form" class="btn btn-primary">Save Form</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="add-groups-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Groups</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Group Name</label>
+                           <input type="text" class="form-control" id="input-group" placeholder="Enter Domain" />
+                        </div>
+                        <div class="card card-rounded p-2">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Select Mentors</label>
+                              <input type="text" class="form-control" id="search-group" placeholder="Search...">
+                            </div>
+                            <% for(let i=0; i < mentorList.length; i++) { %>
+                           <div class="form-check">
+                               <input class="form-check-input" type="checkbox"  value='<%=mentorList[i].id %>'>
+                               <label class="form-check-label" for="inlineCheckbox1"><%=mentorList[i].firstname %></label>
+                           </div>
+                           <% } %>
+                       </div>
+                       <div class="container d-flex justify-content-center align-items-center mt-2">
+                           <div class="line"></div>
+                           <div class="px-2">OR</div>
+                           <div class="line"></div>
+                         </div>
+                         
+                       <div class="form-check m-1">
+                           <input class="form-check-input" id="domain-group" type="checkbox" value='true'>
+                           <label class="form-check-label" for="inlineCheckbox1">Create group automaticaly with all the domains</label>
+                       </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="addGroup()">Add Group</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="add-team-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Team</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Team Name</label>
+                           <input type="text" class="form-control" id="input-team" placeholder="Enter team Name" />
+                        </div>
+                        <div class="card card-rounded p-2">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Select Mentors</label>
+                              <input type="text" class="form-control" id="search-mentee" placeholder="Search...">
+                            </div>
+                            <% for(let i=0; i < menteeList.length; i++) { %>
+                           <div class="form-check">
+                               <input class="form-check-input" type="checkbox"  value='<%=menteeList[i].id %>'>
+                               <label class="form-check-label" for="inlineCheckbox1"><%=menteeList[i].firstname %></label>
+                           </div>
+                           <% } %>
+                       </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="addTeam()">Add Team</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit-team-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Team</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Team Name</label>
+                           <input type="text" class="form-control" id="input-team-name-edit" placeholder="Enter team Name" />
+                        </div>
+                        <div class="card card-rounded p-2">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Select Mentors</label>
+                              <input type="text" class="form-control" id="search-mentee" placeholder="Search...">
+                            </div>
+                            <% for(let i=0; i < menteeList.length; i++) { %>
+                           <div class="form-check">
+                               <input class="team-edit" type="checkbox" id='team-edit-<%=menteeList[i].id %>' value='<%=menteeList[i].id %>'>
+                               <label class="form-check-label" for="inlineCheckbox1"><%=menteeList[i].firstname %></label>
+                           </div>
+                           <% } %>
+                       </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="saveTeam()">Save Team</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="edit-group-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Group</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-12">group-edit
+                        <div class="form-group">
+                           <label for="exampleInputEmail1">Group Name</label>
+                           <input type="text" class="form-control" id="input-group-name-edit" placeholder="Enter group Name" />
+                        </div>
+                        <div class="card card-rounded p-2">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Select Mentors</label>
+                              <input type="text" class="form-control" id="search-mentee" placeholder="Search...">
+                            </div>
+                            <% for(let i=0; i < mentorList.length; i++) { %>
+                           <div class="form-check">
+                               <input class="group-edit" type="checkbox" id='group-edit-<%=mentorList[i].id %>' value='<%=mentorList[i].id %>'>
+                               <label class="form-check-label" for="inlineCheckbox1"><%=mentorList[i].firstname %></label>
+                           </div>
+                           <% } %>
+                       </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                  <button type="button" class="btn btn-primary" onclick="saveGroup()">Save Team</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Modal Ends -->

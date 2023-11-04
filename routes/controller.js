@@ -1,4 +1,4 @@
-const { getDomain, updateDomain, deleteDomain, addDomain, addForm, getForm, updateForm, deleteForm, addGroup, allMentors, getDomainList } = require("../database/query")
+const { getDomain, updateDomain, deleteDomain, addDomain, addForm, getForm, updateForm, deleteForm, addGroup, allMentors, getDomainList, addTeam, getTeam, updateTeam, deleteTeam, getGroup, updateGroup, deleteGroup } = require("../database/query")
 const runQuery = require("../database/runQuery")
 const sendHTTPResponse = require("../lib/sendHTTPResponse")
 
@@ -76,7 +76,47 @@ const addGroupController = async (request, response) => {
    await runQuery(addGroup(), [groupName, JSON.stringify(checkedAgentIDList), 3])
    return sendHTTPResponse.success(response, "Added Group Successfully")
 }
-
+const getGroupController = async (request, response) => {
+   const groupID = request.query.id
+   const groupValue = (await runQuery(getGroup(), groupID))[0]
+   return sendHTTPResponse.success(response, "Fetched group corresponding to the id", groupValue)
+}
+const updateGroupController = async (request, response) => {
+   const groupID = request.params.id
+   const groupName = request.body.groupName
+   const groupList = request.body.checkedUserIDListOnEdit
+   await runQuery(updateGroup(), [groupName, JSON.stringify(groupList), 3, groupID])
+   return sendHTTPResponse.success(response, "Update Team Successfully")
+}
+const deleteGroupController = async (request, response) => {
+   const groupID = request.params.id
+   await runQuery(deleteGroup(), [groupID])
+   return sendHTTPResponse.success(response, "Deleted Group Successfully")
+}
+// Team
+const addTeamController = async (request, response) => {
+   const checkedTeamIDList = request.body.checkedUserIDList
+   const teamName = request.body.teamName
+   await runQuery(addTeam(), [teamName, JSON.stringify(checkedTeamIDList), 3])
+   return sendHTTPResponse.success(response, "Added Team Successfully")
+}
+const getTeamController = async (request, response) => {
+   const teamID = request.query.id
+   const teamValue = (await runQuery(getTeam(), teamID))[0]
+   return sendHTTPResponse.success(response, "Fetched team corresponding to the id", teamValue)
+}
+const updateTeamController = async (request, response) => {
+   const teamID = request.params.id
+   const teamName = request.body.teamName
+   const teamList = request.body.checkedUserIDListOnEdit
+   await runQuery(updateTeam(), [teamName, JSON.stringify(teamList), 3, teamID])
+   return sendHTTPResponse.success(response, "Update Team Successfully")
+}
+const deleteTeamController = async (request, response) => {
+   const teamID = request.params.id
+   await runQuery(deleteTeam(), [teamID])
+   return sendHTTPResponse.success(response, "Deleted Team Successfully")
+}
 module.exports = {
    getDomainController,
    updateDomainController,
@@ -87,4 +127,11 @@ module.exports = {
    updateFormController,
    deleteFormController,
    addGroupController,
+   addTeamController,
+   getTeamController,
+   updateTeamController,
+   deleteTeamController,
+   getGroupController,
+   updateGroupController,
+   deleteGroupController
 }
