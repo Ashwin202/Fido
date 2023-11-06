@@ -58,6 +58,29 @@ ALTER TABLE fido.form ADD COLUMN `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 
 ALTER TABLE user ADD FOREIGN KEY (domain) REFERENCES domain(id);
 ALTER TABLE `fido.user` ADD COLUMN `team` DEFAULT NULL;
+CREATE TABLE fido.events (
+    `id` int not null auto_increment primary key,
+    `name` varchar(255) not null UNIQUE,
+    `description` text null,
+    `form_id` int,
+    `group_id` int,
+    `team_id` int,
+    `created_by` int not null,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `active` TINYINT DEFAULT 1,
+    FOREIGN KEY (`created_by`) REFERENCES `user`(`id`),
+    FOREIGN KEY (`form_id`) REFERENCES `form`(`id`),
+    FOREIGN KEY (`group_id`) REFERENCES `groups`(`id`),
+    FOREIGN KEY (`team_id`) REFERENCES `team`(`id`)
+);
+
+
+
+
+
+
+
 CREATE TABLE
     fido.login (
         empid varchar(255) not null,
