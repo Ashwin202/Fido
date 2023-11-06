@@ -45,13 +45,15 @@
 <div class="m-3">
    <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Configuration Hub</button>
-        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Users</button>
+        <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-configuration" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Configuration Hub</button>
+        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-users" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Users</button>
+        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-events" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="populateEvents()">Events</button>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">   <%- include ('../../views/partials/configuration.ejs') %></div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/users.ejs') %></div>
+      <div class="tab-pane fade show active" id="nav-configuration" role="tabpanel" aria-labelledby="nav-home-tab">   <%- include ('../../views/partials/configuration.ejs') %></div>
+      <div class="tab-pane fade" id="nav-users" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/users.ejs') %></div>
+      <div class="tab-pane fade" id="nav-events" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/events.ejs') %></div>
     </div>
 
 </div>
