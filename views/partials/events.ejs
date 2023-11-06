@@ -1,0 +1,176 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+<script type="text/javascript" src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.22/sorting/datetime-moment.js"></script>
+
+
+<div class="container" style="max-width: 1600px">
+   <div class="row">
+      <div class="col-md-12">
+         <div class="d-flex justify-content-end">
+            <div class="btn-group dropleft m-1">
+               <button class="btn btn-success" data-toggle="modal" data-target="#add-event-modal">Add Event</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="add-event-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Event 🏆</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Event Name</label>
+                                 <input type="text" class="form-control" id="event-name"
+                                    placeholder="Enter event name" />
+                              </div>
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Form Name</label>
+                                 <select class="form-control" id="form-id">
+                                    <% for(let i=0; i < formList.length; i++) { %>
+                                       <option value="<%=formList[i].id %>">
+                                          <%=formList[i].name %>
+                                       </option>
+                                       <% } %>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label for="exampleFormControlSelect1">Mentee Group</label>
+                                 <select class="form-control" id="mentee-team-id">
+                                    <% for(let i=0; i < teamList.length; i++) { %>
+                                       <option value="<%=teamList[i].id %>">
+                                          <%=teamList[i].name %>
+                                       </option>
+                                       <% } %>
+                                 </select>
+                              </div>
+
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Description</label>
+                                 <input type="text" class="form-control" id="description"
+                                    placeholder="Enter description" />
+                              </div>
+                              <div class="form-group">
+                                 <label for="exampleFormControlSelect1">Mentor Group</label>
+                                 <select class="form-control" id="mentor-group-id">
+                                    <% for(let i=0; i < groupList.length; i++) { %>
+                                       <option value="<%=groupList[i].id %>">
+                                          <%=groupList[i].name %>
+                                       </option>
+                                       <% } %>
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" class="btn btn-primary" onclick="createAdminEvent()"> Create Event
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Modal Ends -->
+
+         </div>
+         <div id="campaign-list-table">
+            <table class="table table-striped table-bordered custom-table" id="event-table"
+               style="width: 100%; white-space: nowrap"></table>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+
+   function createAdminEvent() {
+      return demo.showNotification("left","bottom", "Event Added successfully")
+      const eventName = document.getElementById("event-name").value
+      const description = document.getElementById("description").value
+      const teamID = document.getElementById("mentee-team-id").value
+      const groupID = document.getElementById("mentor-group-id").value
+      const formID = document.getElementById("form-id").value
+      console.log({ eventName, description, teamID, groupID, formID })
+      if (eventName == "") return demo.showNotification("left", "bottom", "Event Name cant be empty");
+      else if (teamID == "") return demo.showNotification("left", "bottom", "Team Name cant be empty");
+      else if (groupID == "") return demo.showNotification("left", "bottom", "Group Name cant be empty");
+      else if (formID == "") return demo.showNotification("left", "bottom", "Form Name cant be empty");
+      else {
+         fetch("/api/events/", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+               eventName,
+               description,
+               teamID,
+               groupID,
+               formID
+            }),
+         })
+            .then((response) => response.json())
+            .then((response) => {
+               console.log(response)
+               response.error ? demo.showNotification("left", "bottom", response.message) : demo.showNotification("left", "bottom", response.message);
+               $("#add-event-modal").modal("hide");
+               return;
+            });
+      }
+   }
+
+   function populateEvents() {
+
+      const campaignTable = new DataTable("#event-table", {
+         // data: data,
+         ajax: {
+            url: "/api/events/",
+            type: "GET",
+            dataSrc: function (json) {
+               return json.data;
+            },
+         },
+         responsive: true,
+         pageLength: 25,
+         paging: true,
+         autoWidth: true,
+         deferRender: true,
+         order: [],
+         initComplete: function (settings, json) {
+            $("#loader-bg").remove();
+            $("div.dataTables_filter input").attr("autocomplete", "off").css("font-size", 14);
+         },
+         columns: [
+            // {
+            //    data: "lastname",
+            //    title: "Full Name",
+            //    render: (data, type, row, meta) => {
+            //       return `<span title="${data}">${row.firstname} ${row.lastname}</span>`;
+            //    },
+            // },
+            // { data: "emailID", title: "Contact", responsivePriority: 3, width: "20%" },
+            { data: "name", title: "Event Name", responsivePriority: 3, width: "20%" },
+            // {
+            //    data: "lastname",
+            //    title: "Action",
+            //    render: (data, type, row, meta) => {
+            //       return `<img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteUser('${row.id}')" src="../assets/img/delete.png" width="20px" />`;
+            //    },
+            // },
+         ],
+      });
+   }
+</script>

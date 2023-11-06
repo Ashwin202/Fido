@@ -2,6 +2,7 @@ const router = require('express').Router()
 const adminRouter = require('./admins')
 const mentorRouter = require('./mentors')
 const menteeRouter = require('./mentees')
+const eventRouter = require('./event')
 const controller = require('./controller')
 
 
@@ -29,5 +30,6 @@ router.post('/team', controller.addTeamController)
 router.use('/admins', adminRouter)
 router.use('/mentors', mentorRouter)
 router.use('/mentees', menteeRouter)
+router.use('/events', eventRouter)
 
 module.exports = router
