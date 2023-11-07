@@ -15,7 +15,6 @@ const getEventDetails = async(request, response)=>{
 }
 
 const addEventController = async(request, response)=>{
-    console.log("ssssssssss")
     try{
         const {eventName, description, teamID, groupID, formID} = request.body
         await runQuery(addEvent(), [eventName, description, formID, groupID, teamID, 3])
