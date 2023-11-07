@@ -200,6 +200,11 @@ router.post("/feedback", (req, res) => {
       }
    });
 });
+
+router.get("/mentor-dashboard", (req, res) => {
+   res.send("Mentor Dashboard")
+});
+
 router.get("/logout", (req, res) => {
    req.logout(function (err) {
       if (err) {
