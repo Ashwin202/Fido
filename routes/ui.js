@@ -13,21 +13,6 @@ const runQuery = require("../database/runQuery");
 // const  } = require("./functions/auth");
 var sessionData;
 
-router.get("/login", (req, res) => {
-   if (req.user) {
-      if (sessionData.user.userType != "" && sessionData.user.userType == "guest") {
-         con.query(query.getAllDetailsGuest(req.user.empid), (error, result) => {
-            return res.status(200).render("../views/dashboard-mentor.ejs", { usertype: sessionData.user.userType, userData: result });
-         });
-      } else {
-         con.query(query.getAllDetails(req.user.empid), (error, result) => {
-            return res.status(200).render("../views/dashboard-mentor.ejs", { usertype: sessionData.user.userType, userData: result });
-         });
-      }
-   } else {
-      return res.render("index");
-   }
-});
 
 router.post("/login", (req, res) => {
   console.log(req.body)
