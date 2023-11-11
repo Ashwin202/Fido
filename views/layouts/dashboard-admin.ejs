@@ -24,7 +24,7 @@
    </head>
 
    <body>
-      <nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light">
          <a class="navbar-brand" href="#">Fido</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,18 +33,19 @@
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="/admin-dashboard">Home</a>
+               </li>
+               <li class="nav-item ">
+                  <a class="nav-link" href="/settings" style="cursor: pointer">Settings</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="/settings" style="cursor: pointer" onclick="feedback()">Settings</a>
+                  <a class="nav-link" href="/logout">Logout</a>
                </li>
-               <!-- <li class="nav-item">
-                  <a class="nav-link" id="feedbacks" style="cursor: pointer" onclick="feedback()">Add Feedback</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/logout">Signout</a>
-               </li> -->
             </ul>
+            <div class="d-flex">
+               <p class="mt-1" style="font-size: 16px; font-weight: 500;"> <%= username %> <img src="../assets/img/user.png" width="20px" height="20px" /></p>
+               <div class="btn-group  m-1">
+           </div>         
          </div>
       </nav>
 
@@ -124,6 +125,9 @@
                ajax: {
                   url: "/api/mentors/",
                   type: "GET",
+                  headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+                  },
                   dataSrc: function (json) {
                      return json.data;
                   },
@@ -156,11 +160,13 @@
             const lname = document.getElementById("lname").value;
             const email = document.getElementById("email").value;
             const domain = document.getElementById("domain").value;
+            const token = sessionStorage.getItem(token)
             console.log(fname, lname, email, domain);
             fetch("/api/mentors", {
                method: "POST",
                headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`
                },
                body: JSON.stringify({
                   fname,

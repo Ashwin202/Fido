@@ -13,6 +13,7 @@
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
       <script src="/plugins/notification.js" charset="utf-8"></script>
       <title>Dashboard-Mentor</title>
@@ -28,18 +29,19 @@
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                <li class="nav-item">
-                  <a class="nav-link" href="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="/admin-dashboard">Home</a>
                </li>
                <li class="nav-item active">
                   <a class="nav-link" href="/settings" style="cursor: pointer">Settings</a>
                </li>
-               <!-- <li class="nav-item">
-                  <a class="nav-link" id="feedbacks" style="cursor: pointer" onclick="feedback()">Add Feedback</a>
-               </li>
                <li class="nav-item">
-                  <a class="nav-link" href="/logout">Signout</a>
-               </li> -->
+                  <a class="nav-link" href="/logout">Logout</a>
+               </li>
             </ul>
+            <div class="d-flex">
+               <p class="mt-1" style="font-size: 16px; font-weight: 500;"> <%= username %> <img src="../assets/img/user.png" width="20px" height="20px" /></p>
+               <div class="btn-group  m-1">
+           </div>         
          </div>
       </nav>
 <div class="m-3">
@@ -47,7 +49,7 @@
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-configuration" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Configuration Hub</button>
         <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-users" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Users</button>
-        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-events" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="populateEvents()">Events</button>
+        <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-events" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" >Events</button>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -55,8 +57,6 @@
       <div class="tab-pane fade" id="nav-users" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/users.ejs') %></div>
       <div class="tab-pane fade" id="nav-events" role="tabpanel" aria-labelledby="nav-profile-tab"> <%- include ('../../views/partials/events.ejs') %></div>
     </div>
-
-</div>
  
       <style>
          .line {
@@ -127,6 +127,9 @@
          selectedDomainID = id;
          fetch(`/api/domain?id=${id}`, {
             method: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -142,6 +145,9 @@
          selectedDomainID = id;
          fetch(`/api/form/${id}`, {
             method: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -169,6 +175,7 @@
                         method: "PUT",
                         headers: {
                            "Content-Type": "application/json",
+                           Authorization: `Bearer ${sessionStorage.getItem('token')}`
                         },
                         body: JSON.stringify(formData),
                      })
@@ -194,6 +201,7 @@
             method: "PUT",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${sessionStorage.getItem('token')}`
             },
             body: JSON.stringify({
                domain,
@@ -213,6 +221,7 @@
             method: "POST",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${sessionStorage.getItem('token')}`
             },
             body: JSON.stringify({
                domain,
@@ -231,6 +240,9 @@
       const deleteDomain = (id) => {
          fetch(`/api/domain/${id}`, {
             method: "PATCH",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -242,6 +254,9 @@
       const deleteForm = (id) => {
          fetch(`/api/form/${id}`, {
             method: "PATCH",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -283,6 +298,7 @@
                   method: "POST",
                   headers: {
                      "Content-Type": "application/json",
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
                   },
                   body: JSON.stringify({
                      formData,
@@ -357,6 +373,7 @@
                   method: "POST",
                   headers: {
                      "Content-Type": "application/json",
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
                   },
                   body: JSON.stringify({
                      checkedAgentIDList,
@@ -384,6 +401,7 @@
                   method: "POST",
                   headers: {
                      "Content-Type": "application/json",
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
                   },
                   body: JSON.stringify({
                      checkedUserIDList,
@@ -405,6 +423,9 @@
       selectedTeamID = id
       fetch(`/api/team?id=${id}`, {
             method: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -437,6 +458,7 @@
             method: "PUT",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${sessionStorage.getItem('token')}`
             },
             body: JSON.stringify({
                checkedUserIDListOnEdit,
@@ -455,6 +477,9 @@
       const deleteTeam = (id) => {
          fetch(`/api/team/${id}`, {
             method: "PATCH",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -470,6 +495,9 @@
       selectedGroupID = id
       fetch(`/api/group?id=${id}`, {
             method: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {
@@ -502,6 +530,7 @@
             method: "PUT",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${sessionStorage.getItem('token')}`
             },
             body: JSON.stringify({
                checkedUserIDListOnEdit,
@@ -520,6 +549,9 @@
       const deleteGroup = (id) => {
          fetch(`/api/group/${id}`, {
             method: "PATCH",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+            },
          })
             .then((response) => response.json())
             .then((response) => {

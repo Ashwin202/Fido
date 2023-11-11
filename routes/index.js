@@ -4,8 +4,14 @@ const mentorRouter = require('./mentors')
 const menteeRouter = require('./mentees')
 const eventRouter = require('./event')
 const controller = require('./controller')
+const authRouter = require('./auth')
+const passport = require('passport')
 
 
+
+router.use('/', authRouter)
+
+router.use(passport.authenticate('jwt',{session:true}))
 
 router.get('/domain', controller.getDomainController)
 router.put('/domain/:id', controller.updateDomainController)

@@ -12,6 +12,8 @@ CREATE TABLE
         `firstname` varchar(255) not null,
         `lastname` varchar(255) not null,
         `user_type` int not null,
+        `username` varchar(255) not null,
+        `password` varchar(255) not null,
         `domain` int,
         `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
         primary key(id)
@@ -75,8 +77,8 @@ CREATE TABLE fido.events (
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`)
 );
 
-
-
+ALTER TABLE `fido.user` add COLUMN `username` varchar(255) not null;
+ALTER TABLE `user` add COLUMN `password` varchar(255) not null;   
 
 
 

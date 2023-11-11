@@ -33,7 +33,7 @@
                                                 <label>Username<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                                                    <input type="text" class="form-control" placeholder="Enter Username">
+                                                    <input type="text" id="username" class="form-control" placeholder="Enter Username">
                                                 </div>
                                             </div>
 
@@ -41,13 +41,13 @@
                                                 <label>Password<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-                                                    <input type="text" class="form-control" placeholder="Enter Password">
+                                                    <input type="text" id="password" class="form-control" placeholder="Enter Password">
                                                 </div>
                                             </div>
 
 
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary px-4 float-end mt-4">Login</button>
+                                                <button type="button" class="btn btn-primary px-4 float-end mt-4" onclick="login()">Login</button>
                                             </div>
                                     </form>
                                 </div>
@@ -90,3 +90,34 @@
     font-size: 100px;
 }   
 </style>
+
+<script>
+    function login() {
+  const userType = document.getElementById('user-type').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const userData = {
+    userType: userType,
+    username: username,
+    password: password
+  };
+console.log({userData})
+  fetch('/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'      
+    },
+    body: JSON.stringify(userData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    sessionStorage.setItem('token', data.data.accessToken)
+    window.location.href="/admin-dashboard"
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+</script>

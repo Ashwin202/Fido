@@ -118,7 +118,7 @@
             </div>
             <!-- Modal Ends -->
          </div>
-         <div id="campaign-list-table">
+         <div id="user-list-table">
             <table class="table table-striped table-bordered custom-table" id="mentor-table"
                style="width: 100%; white-space: nowrap"></table>
          </div>
@@ -132,6 +132,9 @@
          ajax: {
             url: "/api/mentors/",
             type: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+                  },
             dataSrc: function (json) {
                return json.data;
             },
@@ -175,6 +178,7 @@
          method: "POST",
          headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
          },
          body: JSON.stringify({
             fname,
@@ -199,6 +203,7 @@
          method: "POST",
          headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
          },
          body: JSON.stringify({
             fname,
