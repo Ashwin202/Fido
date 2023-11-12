@@ -113,8 +113,8 @@ console.log({userData})
     sessionStorage.setItem('token', data.data.accessToken)
     window.location.href="/admin-dashboard"
   })
-  .catch(error => {
-    console.error('Error:', error);
+  .catch((error) => {
+    console.log(error)
   });
 }
 
