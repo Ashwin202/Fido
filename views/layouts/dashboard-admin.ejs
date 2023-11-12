@@ -101,7 +101,7 @@
             const campaignTable = new DataTable("#mentor-table", {
                // data: data,
                ajax: {
-                  url: "/api/mentors/",
+                  url: "/api/users?userType=mentor",
                   type: "GET",
                   headers:{
                      Authorization: `Bearer ${sessionStorage.getItem('token')}`
@@ -153,7 +153,7 @@
             const domain = document.getElementById("domain").value;
             const token = sessionStorage.getItem(token)
             console.log(fname, lname, email, domain);
-            fetch("/api/mentors", {
+            fetch("/api/users", {
                method: "POST",
                headers: {
                   "Content-Type": "application/json",
@@ -164,6 +164,7 @@
                   lname,
                   email,
                   domain,
+                  userType:"mentor"
                }),
             })
                .then((response) => response.json())
