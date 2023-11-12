@@ -23,7 +23,7 @@
             <!-- Modal -->
             <div class="modal fade" id="add-mentor-modal" tabindex="-1" role="dialog"
                aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document">
+               <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                      <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Mentor</h5>
@@ -58,6 +58,21 @@
                                        <% } %>
                                  </select>
                               </div>
+                           </div>
+                        </div>
+                        <h6>Add Credentials</h6>
+                        <div class="row card-rounded">
+                              <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Username</label>
+                                    <input type="email" class="form-control" id="username" placeholder="Enter Username" />
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter Password" />
+                                 </div>
                            </div>
                         </div>
                      </div>
@@ -118,7 +133,7 @@
             </div>
             <!-- Modal Ends -->
          </div>
-         <div id="campaign-list-table">
+         <div id="user-list-table">
             <table class="table table-striped table-bordered custom-table" id="mentor-table"
                style="width: 100%; white-space: nowrap"></table>
          </div>
@@ -127,12 +142,16 @@
 </div>
 <script>
    $(document).ready(function () {
-      const campaignTable = new DataTable("#mentor-table", {
+      const mentorTable = new DataTable("#mentor-table", {
          // data: data,
          ajax: {
-            url: "/api/mentors/",
+            url: "/api/users?userType=mentor",
             type: "GET",
+            headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+                  },
             dataSrc: function (json) {
+               console.log({data:json.data})
                return json.data;
             },
          },
@@ -170,17 +189,23 @@
       const fname = document.getElementById("fname").value;
       const lname = document.getElementById("lname").value;
       const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
       const domain = document.getElementById("field-domain").value;
-      fetch("/api/mentors", {
+      fetch("/api/users", {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
          },
          body: JSON.stringify({
             fname,
             lname,
             email,
             domain,
+            userType:"mentor",
+            username,
+            password
          }),
       })
          .then((response) => response.json())
@@ -195,16 +220,18 @@
       const lname = document.getElementById("mentee-lname").value;
       const email = document.getElementById("mentee-email").value;
       const domain = document.getElementById("mentee-team").value != '' ? document.getElementById("mentee-team").value : null;
-      fetch("/api/mentees", {
+      fetch("/api/users", {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
          },
          body: JSON.stringify({
             fname,
             lname,
             email,
             domain,
+            userType:"mentee"
          }),
       })
          .then((response) => response.json())

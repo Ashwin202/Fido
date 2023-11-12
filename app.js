@@ -2,45 +2,50 @@ var express = require("express");
 var mysql = require("mysql");
 const app = express();
 const flash=require("connect-flash")
-// var session = require("express-session");
+const session = require("express-session");
 const passport = require('passport');
 var uiRouter = require("./routes/ui");
 var apiRouter = require("./routes");
 const auth=require("./routes/functions/auth")
+const jwt = require('jsonwebtoken')
 require("dotenv").config();
-
-var con = require("./database/db");
+require('./routes/auth/passport')
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
+const { verifyCookies } = require("./routes/middlewares/verifyCookies");
 
 
 app.use(bodyParser.json())
 
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave: true,
-//   saveUninitialized: true,
-//   cookie: {
-//       secure: false
-//   }
-// }));
+app.use(cookieParser());
+
+app.use(session({
+  secret: 'processenv',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+      secure: false
+  }
+}));
+
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
 app.use(flash());
-// app.use(passport.initialize())
-// app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session());
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-con.connect((err) => {
-  if (err) {
-    console.log("Error in connecting the server with database"+process.env.DATABASE);
-  } else {     
-    auth.setStrategies(app);
-    console.log("Database "+process.env.DATABASE+" connected");
-  }
-});
+passport.serializeUser( (user, done) => { 
+  done(null, user)
+} )
+passport.deserializeUser( (user, done) => { 
+  done(null, user)
+})
+
+app.use(verifyCookies)
 
 app.use("/", uiRouter);
 app.use("/api/", apiRouter);

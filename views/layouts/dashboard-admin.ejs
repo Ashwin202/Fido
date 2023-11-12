@@ -20,33 +20,12 @@
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
 
       <script src="/plugins/notification.js" charset="utf-8"></script>
+      <script src="/assets/js/common.js" charset="utf-8"></script>
       <title>Dashboard-Mentor</title>
    </head>
 
    <body>
-      <nav class="navbar navbar-expand-lg navbar-light">
-         <a class="navbar-brand" href="#">Fido</a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-               <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/settings" style="cursor: pointer" onclick="feedback()">Settings</a>
-               </li>
-               <!-- <li class="nav-item">
-                  <a class="nav-link" id="feedbacks" style="cursor: pointer" onclick="feedback()">Add Feedback</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/logout">Signout</a>
-               </li> -->
-            </ul>
-         </div>
-      </nav>
+<%- include('../partials/navBar.ejs') %>
 
       <div class="container" style="max-width: 1600px">
          <div class="row">
@@ -122,8 +101,11 @@
             const campaignTable = new DataTable("#mentor-table", {
                // data: data,
                ajax: {
-                  url: "/api/mentors/",
+                  url: "/api/users?userType=mentor",
                   type: "GET",
+                  headers:{
+                     Authorization: `Bearer ${sessionStorage.getItem('token')}`
+                  },
                   dataSrc: function (json) {
                      return json.data;
                   },
@@ -151,22 +133,38 @@
                ],
             });
          });
+
+
+      const allNavItems = document.querySelectorAll('.navbar-nav .nav-item');
+      allNavItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      const activeNavItem = document.getElementById('admin-dashboard-nav-item');
+      if (activeNavItem) {
+        activeNavItem.classList.add('active');
+      }
+   
+
+
          const addMentor = () => {
             const fname = document.getElementById("fname").value;
             const lname = document.getElementById("lname").value;
             const email = document.getElementById("email").value;
             const domain = document.getElementById("domain").value;
+            const token = sessionStorage.getItem(token)
             console.log(fname, lname, email, domain);
-            fetch("/api/mentors", {
+            fetch("/api/users", {
                method: "POST",
                headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`
                },
                body: JSON.stringify({
                   fname,
                   lname,
                   email,
                   domain,
+                  userType:"mentor"
                }),
             })
                .then((response) => response.json())
