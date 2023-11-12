@@ -47,8 +47,8 @@ passport.deserializeUser( (user, done) => {
 
 app.use(verifyCookies)
 
+app.use("/api", apiRouter);
 app.use("/", uiRouter);
-app.use("/api/", apiRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("Server Started at port "+process.env.PORT);
