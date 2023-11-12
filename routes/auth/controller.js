@@ -8,7 +8,9 @@ const loginController = async (request, response)=>{
     try{
         const username = request.body.username
         const password = request.body.password
-        const loginDetails = (await runQuery(query.getUserDetails(), [username]))[0]
+        const userType = request.body.userType
+        console.log({userType})
+        const loginDetails = (await runQuery(query.getUserDetails(), [username, userType]))[0]
         if(!loginDetails || !bcrypt.compareSync(password, loginDetails.password))
             throw{error:404, message:"No user found!"}
         const userDetails = {username: loginDetails.username, userID: loginDetails.id}
@@ -18,7 +20,22 @@ const loginController = async (request, response)=>{
     }
     catch(error){
         console.log(error)
+        return sendHTTPResponse.success(response, "Error in logging In", error.message )
     }
   }
 
-  module.exports = {loginController}
+  const logOutController = async (request, response) => {
+    try{
+        response.clearCookie('jwt', { path: '/' });
+        request.username = null
+        request.userID = null
+        request.cookies.jwt = null
+        request.session.passport = null
+        return sendHTTPResponse.success(response, "Logged Out Successfully" )
+    }
+    catch(error){
+        return sendHTTPResponse.error(response, "Error in logging out", error.message )
+    }
+  }
+
+  module.exports = {loginController, logOutController}

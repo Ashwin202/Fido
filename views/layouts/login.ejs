@@ -98,9 +98,7 @@
   const password = document.getElementById('password').value;
 
   const userData = {
-    userType: userType,
-    username: username,
-    password: password
+     userType, username, password
   };
 console.log({userData})
   fetch('/api/login', {
