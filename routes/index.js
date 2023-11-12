@@ -6,7 +6,7 @@ const controller = require("./controller")
 const authRouter = require("./auth")
 const passport = require("passport")
 
-router.use("/", authRouter)
+router.use(authRouter)
 
 router.use(passport.authenticate("jwt", { session: true }))
 

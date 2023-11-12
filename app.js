@@ -13,6 +13,7 @@ require('./routes/auth/passport')
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const { verifyCookies } = require("./routes/middlewares/verifyCookies");
+const {requestLogger}  = require("./routes/middlewares/requestLogger");
 
 
 app.use(bodyParser.json())
@@ -45,6 +46,7 @@ passport.deserializeUser( (user, done) => {
   done(null, user)
 })
 
+app.use(requestLogger)
 app.use(verifyCookies)
 
 app.use("/api", apiRouter);
