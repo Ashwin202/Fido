@@ -102,4 +102,11 @@ module.exports = {
    deleteTeam() {
       return `UPDATE fido.team SET active = 0 where id= ?;`;
    },
+   getAdminInsightsCount() {
+      return `SELECT
+      (SELECT COUNT(*) FROM events WHERE active = 1) AS activeEvent,
+      (SELECT COUNT(*) FROM user WHERE user_type = 1) AS mentorCount,
+      (SELECT COUNT(*) FROM user WHERE user_type = 2) AS menteeCount;
+  `
+   }
 };

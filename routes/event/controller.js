@@ -17,7 +17,7 @@ const getEventDetails = async(request, response)=>{
 const addEventController = async(request, response)=>{
     try{
         const {eventName, description, teamID, groupID, formID} = request.body
-        await runQuery(addEvent(), [eventName, description, formID, groupID, teamID, 3])
+        await runQuery(addEvent(), [eventName, description, formID, groupID, teamID, request.userID])
         return sendHTTPResponse.success(response, "Event Added successfully.")
     }
     catch(error){
