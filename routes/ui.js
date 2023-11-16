@@ -21,7 +21,8 @@ router.get('/login' ,(request, response)=>{
 router.get("/admin-dashboard", async(request, response) => {
    const username =request.username
    const domainList = await runQuery(query.getDomainList())
-   return response.status(200).render("../views/layouts/dashboard-admin.ejs", { usertype: 1, domainList, username })
+   const adminInsights = (await runQuery(query.getAdminInsightsCount()))[0]
+   return response.status(200).render("../views/layouts/dashboard-admin.ejs", { usertype: 1, domainList, username, adminInsights })
 })
 
 router.get("/settings", async(request, response) => {

@@ -24,7 +24,8 @@ const deleteDomainController = async (request, response) => {
 
 const addDomainController = async (request, response) => {
    const domain = request.body.domain
-   await runQuery(addDomain(), [domain, 3])
+   const userID = request.userID
+   await runQuery(addDomain(), [domain, userID])
    return sendHTTPResponse.success(response, "Added Domain Successfully")
 }
 
@@ -37,14 +38,15 @@ const getFormController = async (request, response) => {
 
 const addFormController = async (request, response) => {
    const formData = request.body.formData
-   await runQuery(addForm(), [formData.name, formData.value, 3])
+   const userID = request.userID
+   await runQuery(addForm(), [formData.name, formData.value, userID])
    return sendHTTPResponse.success(response, "Added Domain Successfully")
 }
 
 const updateFormController = async (request, response) => {
    const formID = request.params.id
    const formDetails = request.body
-   await runQuery(updateForm(), [formDetails.name, formDetails.value, 3, formID])
+   await runQuery(updateForm(), [formDetails.name, formDetails.value, request.userID, formID])
    return sendHTTPResponse.success(response, "Update Domain Successfully")
 }
 
@@ -67,13 +69,13 @@ const addGroupController = async (request, response) => {
       })
       groupArray.map(async (group) => {
          const { groupName, mentorList } = group
-         await runQuery(addGroup(), [groupName, JSON.stringify(mentorList), 3])
+         await runQuery(addGroup(), [groupName, JSON.stringify(mentorList), request.userID])
       })
          return sendHTTPResponse.success(response, "Added Group Successfully")
    }
    const checkedAgentIDList = request.body.checkedAgentIDList
    const groupName = request.body.groupName
-   await runQuery(addGroup(), [groupName, JSON.stringify(checkedAgentIDList), 3])
+   await runQuery(addGroup(), [groupName, JSON.stringify(checkedAgentIDList), request.userID])
    return sendHTTPResponse.success(response, "Added Group Successfully")
 }
 const getGroupController = async (request, response) => {
@@ -85,7 +87,7 @@ const updateGroupController = async (request, response) => {
    const groupID = request.params.id
    const groupName = request.body.groupName
    const groupList = request.body.checkedUserIDListOnEdit
-   await runQuery(updateGroup(), [groupName, JSON.stringify(groupList), 3, groupID])
+   await runQuery(updateGroup(), [groupName, JSON.stringify(groupList), request.userID, groupID])
    return sendHTTPResponse.success(response, "Update Team Successfully")
 }
 const deleteGroupController = async (request, response) => {
@@ -97,7 +99,7 @@ const deleteGroupController = async (request, response) => {
 const addTeamController = async (request, response) => {
    const checkedTeamIDList = request.body.checkedUserIDList
    const teamName = request.body.teamName
-   await runQuery(addTeam(), [teamName, JSON.stringify(checkedTeamIDList), 3])
+   await runQuery(addTeam(), [teamName, JSON.stringify(checkedTeamIDList), request.userID])
    return sendHTTPResponse.success(response, "Added Team Successfully")
 }
 const getTeamController = async (request, response) => {
@@ -109,7 +111,7 @@ const updateTeamController = async (request, response) => {
    const teamID = request.params.id
    const teamName = request.body.teamName
    const teamList = request.body.checkedUserIDListOnEdit
-   await runQuery(updateTeam(), [teamName, JSON.stringify(teamList), 3, teamID])
+   await runQuery(updateTeam(), [teamName, JSON.stringify(teamList), request.userID, teamID])
    return sendHTTPResponse.success(response, "Update Team Successfully")
 }
 const deleteTeamController = async (request, response) => {
