@@ -81,6 +81,9 @@ module.exports = {
       (SELECT COUNT(*) FROM user WHERE user_type = 1) AS mentorCount,
       (SELECT COUNT(*) FROM user WHERE user_type = 2) AS menteeCount;`;
    },
+   getAllEventList() {
+      return `SELECT * from fido.events where active=1;`;
+   },
    getEventList() {
       return `SELECT * from fido.events where group_id in (?);`;
    },
@@ -94,4 +97,7 @@ module.exports = {
       return `INSERT INTO fido.review_log (reviewer_id, reviewee_id, event_id, form_id, form_response)
       VALUES (?, ?, ?, ?, ?);`;
    },
+   getReviewByIDandEventID(){
+      return `SELECT * FROM fido.review_log where event_id= ? and  reviewee_id in (?);`
+   }
 };

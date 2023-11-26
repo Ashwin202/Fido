@@ -28,7 +28,16 @@ router.get("/admin-dashboard", async(request, response) => {
    const username =request.username
    const domainList = await runQuery(query.getDomainList())
    const adminInsights = (await runQuery(query.getAdminInsightsCount()))[0]
-   return response.status(200).render("../views/layouts/dashboard-admin.ejs", { usertype: 1, domainList, username, adminInsights })
+   const allEvents = await runQuery(query.getAllEventList())
+   const chartLabels = allEvents?.map(event => event.name)
+   const chartValues = [];
+   for (const event of allEvents || []) {
+      const teamIDs = (JSON.parse((await runQuery(query.getTeamByID(),[event.team_id]))[0]?.user_list))
+      const reviewListLength = (await runQuery(query.getReviewByIDandEventID(), [event.id, teamIDs]))?.length
+      chartValues.push((reviewListLength / teamIDs?.length) *100)
+   }
+   chartValues.push(100) // to set the final value is 100
+   return response.status(200).render("../views/layouts/dashboard-admin.ejs", { usertype: 1, domainList, username, adminInsights, chartLabels: JSON.stringify(chartLabels), chartValues:JSON.stringify(chartValues) })
 })
 
 router.get("/settings", async(request, response) => {
