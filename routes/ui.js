@@ -50,14 +50,28 @@ router.get("/settings", async(request, response) => {
    const teamList = await runQuery(query.allTeams())
    return response.status(200).render("../views/layouts/settings.ejs", {domainList, formList, mentorList, groupList, menteeList, teamList, username})
 })
+router.get("/events-inner/:id", async(request, response) => {
+   const username =request.username
+   const eventID = request.params.id
+   return response.status(200).render("../views/layouts/inner-events.ejs", { username, eventID})
+})
+
+router.get("/events", async(request, response) => {
+   const username =request.username
+   const domainList = await runQuery(query.getDomainList())
+   const formList = await runQuery(query.getForms())
+   const mentorList = await runQuery(query.allMentors())
+   const menteeList = await runQuery(query.allMentees())
+   const groupList = await runQuery(query.allGroups())
+   const teamList = await runQuery(query.allTeams())
+   return response.status(200).render("../views/layouts/events.ejs", {domainList, formList, mentorList, groupList, menteeList, teamList, username})
+})
 
 router.get("/mentor-dashboard/:id", async (request, response) => {
    const username =request.username
    const userID = request.userID
    const eventID = request.params.id
    const eventDetails =( await runQuery(query.getEventByID(),[eventID]))[0]
-   const formDetails = (await runQuery(query.getFormByID(),[eventDetails.form_id]))[0]
-   const groupDetails = (await runQuery(query.getGroupByID(),[eventDetails.group_id]))[0]
    const teamDetails = (await runQuery(query.getTeamByID(),[eventDetails.team_id]))[0]
    const eventTeamDetails = await runQuery(query.getUserByID(), [JSON.parse(teamDetails.user_list)])
    const reviewDetails = await runQuery(query.getEventByEventID(), [eventID])

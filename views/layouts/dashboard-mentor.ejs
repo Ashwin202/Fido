@@ -54,7 +54,7 @@
           const campaignTable = new DataTable('#events-table', {
             // data: data,
             ajax: {
-              url: '/api/events/',
+              url: '/api/events?filter=user',
               type: 'GET',
               headers:{
                      Authorization: `Bearer ${sessionStorage.getItem('token')}`

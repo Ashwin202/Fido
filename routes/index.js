@@ -30,6 +30,7 @@ router.patch("/team/:id", controller.deleteTeamController)
 router.get("/team", controller.getTeamController)
 router.post("/team", controller.addTeamController)
 
+router.get("/events/:id", controller.eventListsForIDController)
 router.get("/events", controller.eventListsController)
 
 router.post("/review", controller.addReviewController)
