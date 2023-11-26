@@ -1,11 +1,11 @@
-const { getDomain, updateDomain, deleteDomain, addDomain, addForm, getForm, updateForm, deleteForm, addGroup, allMentors, getDomainList, addTeam, getTeam, updateTeam, deleteTeam, getGroup, updateGroup, deleteGroup } = require("../database/query")
+const { getDomainByID, updateDomain, deleteDomain, addDomain, addForm, getFormByID, updateForm, deleteForm, addGroup, allMentors, getDomainList, addTeam, getTeamByID, updateTeam, deleteTeam, getGroup, updateGroup, deleteGroup, allGroups, getEventList, addReview } = require("../database/query")
 const runQuery = require("../database/runQuery")
 const sendHTTPResponse = require("../lib/sendHTTPResponse")
 
 // Domain Controller
 const getDomainController = async (request, response) => {
    const domainID = request.query.id
-   const domainValue = (await runQuery(getDomain(), domainID))[0]
+   const domainValue = (await runQuery(getDomainByID(), domainID))[0]
    return sendHTTPResponse.success(response, "Fetched domain corresponding to the id", domainValue)
 }
 
@@ -32,7 +32,7 @@ const addDomainController = async (request, response) => {
 // Form Controller
 const getFormController = async (request, response) => {
    const formID = request.params.id
-   const formDetails = (await runQuery(getForm(), [formID]))[0]
+   const formDetails = (await runQuery(getFormByID(), [formID]))[0]
    return sendHTTPResponse.success(response, "Fetched domain corresponding to the id", formDetails)
 }
 
@@ -104,7 +104,7 @@ const addTeamController = async (request, response) => {
 }
 const getTeamController = async (request, response) => {
    const teamID = request.query.id
-   const teamValue = (await runQuery(getTeam(), teamID))[0]
+   const teamValue = (await runQuery(getTeamByID(), teamID))[0]
    return sendHTTPResponse.success(response, "Fetched team corresponding to the id", teamValue)
 }
 const updateTeamController = async (request, response) => {
@@ -118,6 +118,30 @@ const deleteTeamController = async (request, response) => {
    const teamID = request.params.id
    await runQuery(deleteTeam(), [teamID])
    return sendHTTPResponse.success(response, "Deleted Team Successfully")
+}
+
+const eventListsController = async (request, response)=>{
+   const username =request.username
+   const userID = request.userID
+   console.log({userID})
+   const allGroupsList = await runQuery(allGroups())
+   eligibleGroupIDList = []
+   allGroupsList?.map((group)=>{
+     const userList = JSON.parse(group.user_list)?.map(Number)
+     if(userList?.includes(userID))
+      eligibleGroupIDList.push(group.id)
+   })
+   const eventList = await runQuery(getEventList(), [eligibleGroupIDList])
+   return sendHTTPResponse.success(response, "Fetched Events List", eventList)
+}
+
+const addReviewController = async (request, response) => {
+   const formID = request.body.formID
+   const revieweeID = request.body.revieweeID
+   const formResponse = request.body.formResponse
+   const eventID = request.body.eventID
+   await runQuery(addReview(), [request.userID, revieweeID, eventID, formID, JSON.stringify(formResponse)])
+   return sendHTTPResponse.success(response, "Added Review Successfully")
 }
 module.exports = {
    getDomainController,
@@ -135,5 +159,7 @@ module.exports = {
    deleteTeamController,
    getGroupController,
    updateGroupController,
-   deleteGroupController
+   deleteGroupController,
+   eventListsController,
+   addReviewController
 }
