@@ -84,27 +84,12 @@ const eventID = <%- eventID %>
             $("div.dataTables_filter input").attr("autocomplete", "off").css("font-size", 14);
          },
          columns: [
-            // {
-            //    data: "lastname",
-            //    title: "Full Name",
-            //    render: (data, type, row, meta) => {
-            //       return `<span title="${data}">${row.firstname} ${row.lastname}</span>`;
-            //    },
-            // },
-            // { data: "name", title: "Event Name", responsivePriority: 3, width: "20%" },
             { data: "firstname", title: "Candidate Name", render: (data, type, row, meta) => {
                return `${row.firstname} ${row.lastname}`;
             }, },
             { data: "firstname", title: "Review Status", render: (data, type, row, meta) => {
-               return `${row.isReviewed ? `<span class="badge badge-success">Completed</span>` : `<span class="badge badge-danger">Pending</span>`}`;
+               return `${row.isReviewed ? `<span class="badge badge-success opensans-sm ">Completed</span>` : `<span class="badge badge-danger opensans-sm">Pending</span>`}`;
             }, },
-            // {
-            //    data: "lastname",
-            //    title: "Action",
-            //    render: (data, type, row, meta) => {
-            //       return `<img class="delete-icon ml-1" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteUser('${row.id}')" src="../assets/img/delete.png" width="20px" />`;
-            //    },
-            // },
          ],
       });
       })

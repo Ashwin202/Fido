@@ -16,9 +16,13 @@ const getMentee = () => {
  const addMentee = () => {
     return `INSERT INTO fido.user set emailID = ?, firstname = ?, lastname = ?, domain = ?, username = ?, password = ?, user_type = ${CONSTANTS.USERTYPE.USER};`;
  };
+ const getmentorsAndMentees = ()=> {
+    return `SELECT * FROM fido.user where user_type in (${CONSTANTS.USERTYPE.USER}, ${CONSTANTS.USERTYPE.MENTOR});`
+ }
 module.exports = {
     getMentors,
     addMentor,
     getMentee,
-    addMentee
+    addMentee,
+    getmentorsAndMentees
 }
