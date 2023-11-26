@@ -192,6 +192,14 @@
 
       }
       $(document).ready(function () {
+        const allNavItems = document.querySelectorAll('.navbar-nav .nav-item');
+      allNavItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      const activeNavItem = document.getElementById('mentor-dashboard-nav-item');
+      if (activeNavItem) {
+        activeNavItem.classList.add('active');
+      }
         $.noConflict();
       })
     </script>
