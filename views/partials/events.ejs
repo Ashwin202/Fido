@@ -97,7 +97,6 @@
 <script>
 
    function createAdminEvent() {
-      return demo.showNotification("left","bottom", "Event Added successfully")
       const eventName = document.getElementById("event-name").value
       const description = document.getElementById("description").value
       const teamID = document.getElementById("mentee-team-id").value
@@ -125,7 +124,6 @@
          })
             .then((response) => response.json())
             .then((response) => {
-               console.log(response)
                response.error ? demo.showNotification("left", "bottom", response.message) : demo.showNotification("left", "bottom", response.message);
                $("#add-event-modal").modal("hide");
                return;

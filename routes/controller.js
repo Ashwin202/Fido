@@ -1,4 +1,4 @@
-const { getDomainByID, updateDomain, deleteDomain, addDomain, addForm, getFormByID, updateForm, deleteForm, addGroup, allMentors, getDomainList, addTeam, getTeamByID, updateTeam, deleteTeam, getGroup, updateGroup, deleteGroup, allGroups, getEventList, addReview } = require("../database/query")
+const { getDomainByID, updateDomain, deleteDomain, addDomain, addForm, getFormByID, updateForm, deleteForm, addGroup, allMentors, getDomainList, addTeam, getTeamByID, updateTeam, deleteTeam, getGroup, updateGroup, deleteGroup, allGroups, getEventList, addReview, getGroupByID } = require("../database/query")
 const runQuery = require("../database/runQuery")
 const sendHTTPResponse = require("../lib/sendHTTPResponse")
 
@@ -80,7 +80,7 @@ const addGroupController = async (request, response) => {
 }
 const getGroupController = async (request, response) => {
    const groupID = request.query.id
-   const groupValue = (await runQuery(getGroup(), groupID))[0]
+   const groupValue = (await runQuery(getGroupByID(), groupID))[0]
    return sendHTTPResponse.success(response, "Fetched group corresponding to the id", groupValue)
 }
 const updateGroupController = async (request, response) => {
