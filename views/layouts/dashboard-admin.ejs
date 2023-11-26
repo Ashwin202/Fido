@@ -34,7 +34,7 @@
             <div class="col-md-4 mt-3 d-flex justify-content-center">
                <div class="card-rounded opensans-lg" style="background: linear-gradient(to right, #e0c4ec, #ebd8f3); height: 150px; width:150px; padding: 8px;">
                   <br>Mentors
-                  <p class="opensans-xxl text-center"><%- adminInsights.activeEvent %></p>
+                  <p class="opensans-xxl text-center"><%- adminInsights.menteeCount %></p>
                </div>
             </div>
             <div class="col-md-4 mt-3 d-flex justify-content-center">
@@ -46,12 +46,13 @@
             <div class="col-md-4 mt-3 d-flex justify-content-center">
                <div class="card-rounded opensans-lg" style="background: linear-gradient(to right, #beedcc, #ece7ef); height: 150px; width:150px; padding: 8px;">
                   <br>Live Events
-                  <p class="opensans-xxl text-center"><%- adminInsights.menteeCount %></p>
+                  <p class="opensans-xxl text-center"><%- adminInsights.activeEvent %></p>
                </div>
             </div>
          </div>
       </div>
       <div class="col-md-4 p-0 mt-3">
+         <div class="opensans-xl text-center">Top 5 Events</div>
          <div style="max-width: 100%"><canvas id="event-completion-chart"></canvas></div>
       </div>
 
@@ -64,6 +65,8 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
       <script>
+         const chartLabels = ('<%= chartLabels %>')?.replace(/&#34;/g, '"')
+         const chartValues = '<%= chartValues %>'
          $(document).ready(function () {
 
       const allNavItems = document.querySelectorAll('.navbar-nav .nav-item');
@@ -81,10 +84,10 @@ const ctx = document.getElementById('event-completion-chart');
 new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: JSON.parse(chartLabels),
     datasets: [{
       label: 'Completion rate',
-      data: [12, 19, 3, 5, 2, 3, 100],
+      data: JSON.parse(chartValues),
       borderWidth: 1
     }]
   },
