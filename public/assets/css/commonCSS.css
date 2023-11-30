@@ -2,7 +2,7 @@
 
 
 *{
-    font-family: 'Open Sans', sans-serif !important ;
+    font-family: 'Open Sans', 'Font Awesome', sans-serif, !important ;
     }
 .opensans-sm{
     font-size: 12px !important;
@@ -24,9 +24,61 @@
     font-size:30px !important;
     font-weight: 600 !important;
 }
+.opensans-xxxl{
+    font-size:32px !important;
+    font-weight: 700 !important;
+}
+
+select.custom-select.custom-select-sm.form-control.form-control-sm { /* Datatable */
+   width: -webkit-fill-available;
+}
 
 .card-rounded { 
     border-radius: 5px;
     padding: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
  }
+
+
+ @media (max-width: 767px) {
+    .user-dropdown-item {
+       position: static;
+       float: none;
+    }
+ }
+ 
+.user-icon {
+    cursor: pointer;
+    transition: color 0.3s;
+ }
+
+ .navbar-nav .nav-item.active .nav-link{
+   color: #c1078c !important;
+   border-bottom: 3px solid #c1078c;
+   border-radius: 3px;
+   transition: border-bottom 0.3s ease, right 0.3s ease;
+    }
+
+ .dropdown-icon {
+    margin-left: 5px; /* Adjust margin as needed for spacing */
+ }
+
+  .navbar-custom {
+      background-color: #87CEFA; /* Light blue color */
+   }
+
+   .navbar-custom .navbar-toggler-icon {
+      border-color: #fff; /* White color for the toggler icon */
+   }
+
+   .dropdown-icon {
+      margin-left: 5px;
+   }
+
+   .user-dropdown-item a {
+      color: #333; /* Text color for dropdown items */
+   }
+
+   .user-dropdown-item a:hover {
+      background-color: #f0f0f0; /* Background color on hover for dropdown items */
+   }

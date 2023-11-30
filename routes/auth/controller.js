@@ -9,7 +9,6 @@ const loginController = async (request, response)=>{
         const username = request.body.username
         const password = request.body.password
         const userType = request.body.userType
-        console.log({userType})
         const loginDetails = (await runQuery(query.getUserDetails(), [username, userType]))[0]
         if(!loginDetails || !bcrypt.compareSync(password, loginDetails.password))
             throw{error:404, message:"No user found!"}
