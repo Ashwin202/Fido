@@ -34,6 +34,7 @@ router.get("/events/:id", controller.eventListsForIDController)
 router.get("/events", controller.eventListsController)
 
 router.post("/review", controller.addReviewController)
+router.get("/review/:id", controller.getReviewController)
 
 router.use("/admins", adminRouter)
 router.use("/users", userRouter)

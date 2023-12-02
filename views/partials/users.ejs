@@ -147,6 +147,8 @@
                            <label for="csvFile">Upload CSV File:</label>
                            <input type="file" class="form-control-file" id="csvFile" accept=".csv">
                         </div>
+                        <div class="opensans-md">To download csv template, click:</div>                        
+                        <button type="button" class="btn btn-success btn-sm" onclick="downloadCSVTemplate()"> <i class="fa fa-download" aria-hidden="true"></i> Download CSV Template</button>
                      </div>
                      <div class="modal-footer">
                         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
@@ -165,6 +167,17 @@
    </div>
 </div>
 <script>
+   function downloadCSVTemplate(){
+    const csvContent = 'emailID,firstname,lastname';
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const element = document.createElement('a');
+    element.download = 'Bulk upload template.csv';
+    element.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+   }
+   
    $(document).ready(function () {
       const mentorTable = new DataTable("#mentor-table", {
          // data: data,
@@ -273,10 +286,9 @@
    async function addBulkMentee() {
       const fileInput = document.getElementById('csvFile');
       const file = fileInput.files[0];
-      if (!file) {
-         alert('Please select a CSV file.');
-         return;
-      }
+      if (!file) 
+         return demo.showNotification("left", "bottom", 'Please select a CSV file.')
+      
       const formData = new FormData();
       formData.append('bulk-upload-sheet', file);
       formData.append('userType', 'mentee');
@@ -297,7 +309,7 @@
          demo.showNotification("left", "bottom", 'Bulk mentee added successfully!')
          $('#add-bulk-mentee-modal').modal('hide');
       } catch (error) {
-         alert(`Error: ${error.message}`);
+         return demo.showNotification("left", "bottom", error.message)      
       }
    }
 

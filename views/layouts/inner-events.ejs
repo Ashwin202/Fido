@@ -48,6 +48,25 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
 <script type="text/javascript" src="../assets/js/form-render.min.js"></script>
+
+<!-- Modal Starts -->
+<div class="modal fade" id="review-data-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Review Data</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="review-details">
+    </div>
+  </div>
+</div>
+</div>
+<!-- Modal Ends -->
+
 <script>
 const eventID = <%- eventID %>
 
@@ -90,7 +109,37 @@ const eventID = <%- eventID %>
             { data: "firstname", title: "Review Status", render: (data, type, row, meta) => {
                return `${row.isReviewed ? `<span class="badge badge-success opensans-sm ">Completed</span>` : `<span class="badge badge-danger opensans-sm">Pending</span>`}`;
             }, },
+            { data: "firstname", title: "Review Data", render: (data, type, row, meta) => {
+               return `${row.isReviewed ? `<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#review-data-modal" onclick=reviewData(${row.reviewID})> ReviewData </button>` : `No Data`}`;
+            }, },
          ],
       });
+      
       })
+
+function reviewData(id) {
+   fetch(`/api/review/${id}`, {
+   method: "GET",
+   headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`
+   },
+})
+   .then((response) => response.json())
+   .then((data) => {
+      if (data.error) {
+         demo.showNotification("bottom", "bottom", data.message);
+      } else {
+         const keys = data.data.labels
+         const values = data.data.values
+         let innerFormFormat = ''
+         keys.map((item, index)=>{
+            innerFormFormat += `${item} : ${values[index] == '' ? 'Not added': values[index]} \n`
+         })
+         // document.getElementById("review-details").innerText = data.data
+         document.getElementById("review-details").innerText = innerFormFormat
+      }
+   });
+
+}
 </script>

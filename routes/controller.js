@@ -28,6 +28,7 @@ const {
 const runQuery = require("../database/runQuery");
 const moment = require('moment')
 const sendHTTPResponse = require("../lib/sendHTTPResponse");
+const { getFormInfoFormatted } = require("../lib/functions");
 
 // Domain Controller
 const getDomainController = async (request, response) => {
@@ -155,13 +156,13 @@ const eventListsForIDController = async (request, response) => {
 	const reviewDetails = await runQuery(getEventByEventID(), [eventID])
 	let totalMatchingReviews = 0;
 	eventTeamDetails?.forEach((team) => {
-	   const matchingReview = reviewDetails?.find((review) => team.id === review.reviewee_id);
-	   if (matchingReview) {
-		  team.isReviewed = true;
-		  totalMatchingReviews++;
-	   }
+		const matchingReview = reviewDetails?.find((review) => team.id === review.reviewee_id);
+		if (matchingReview) {
+			team.reviewID = matchingReview.id
+			team.isReviewed = true;
+			totalMatchingReviews++;
+		}
 	})
-	console.log(eventTeamDetails)
 	return sendHTTPResponse.success(response, "Fetched Events List", eventTeamDetails);
 };
 
@@ -216,6 +217,11 @@ const addReviewController = async (request, response) => {
 	await runQuery(addReview(), [request.userID, revieweeID, eventID, formID, JSON.stringify(formResponse)]);
 	return sendHTTPResponse.success(response, "Added Review Successfully");
 };
+const getReviewController = async (request, response) => {
+	const reviewID = request.params.id
+	const formDetails = await getFormInfoFormatted(reviewID)
+	return sendHTTPResponse.success(response, "Fetched Review Details", formDetails);
+};
 module.exports = {
 	getDomainController,
 	updateDomainController,
@@ -235,5 +241,6 @@ module.exports = {
 	deleteGroupController,
 	eventListsController,
 	addReviewController,
-	eventListsForIDController
+	eventListsForIDController,
+	getReviewController
 };

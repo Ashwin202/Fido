@@ -99,5 +99,8 @@ module.exports = {
    },
    getReviewByIDandEventID(){
       return `SELECT * FROM fido.review_log where event_id= ? and reviewee_id in (?) ;`
+   },
+   getReviewByID(){
+      return `SELECT * FROM fido.review_log where id= ? ;`
    }
 };
