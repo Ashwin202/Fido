@@ -9,11 +9,10 @@ const loginController = async (request, response)=>{
         const username = request.body.username
         const password = request.body.password
         const userType = request.body.userType
-        console.log({userType})
         const loginDetails = (await runQuery(query.getUserDetails(), [username, userType]))[0]
         if(!loginDetails || !bcrypt.compareSync(password, loginDetails.password))
             throw{error:404, message:"No user found!"}
-        const userDetails = {username: loginDetails.username, userID: loginDetails.id}
+        const userDetails = {username: loginDetails.username, userID: loginDetails.id, userType: loginDetails.user_type}
         const accessToken = jwt.sign(userDetails, process.env.SECRET_TOKEN, {expiresIn:'1d'})
         response.cookie('jwt', accessToken, { httpOnly: true })
         return sendHTTPResponse.success(response, "Successfullly logged in.", {accessToken} )

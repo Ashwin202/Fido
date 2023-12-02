@@ -12,8 +12,8 @@ CREATE TABLE
         `firstname` varchar(255) not null,
         `lastname` varchar(255) not null,
         `user_type` int not null,
-        `username` varchar(255) not null,
-        `password` varchar(255) not null,
+        `username` varchar(255),
+        `password` varchar(255),
         `domain` int,
         `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
         primary key(id)
@@ -76,6 +76,23 @@ CREATE TABLE fido.events (
     FOREIGN KEY (`group_id`) REFERENCES `groups`(`id`),
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`)
 );
+
+CREATE TABLE fido.review_log (
+    `id` int not null auto_increment primary key,
+    `reviewer_id` int not null,
+    `reviewee_id` int not null,
+    `event_id` int not null,
+    `form_id` int not null,
+    `form_response` json not null,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`reviewer_id`) REFERENCES `user`(`id`),
+    FOREIGN KEY (`reviewee_id`) REFERENCES `user`(`id`),
+    FOREIGN KEY (`form_id`) REFERENCES `form`(`id`),
+    FOREIGN KEY (`event_id`) REFERENCES `events`(`id`)
+)
+
+
 
 ALTER TABLE `fido.user` add COLUMN `username` varchar(255) not null;
 ALTER TABLE `user` add COLUMN `password` varchar(255) not null;   

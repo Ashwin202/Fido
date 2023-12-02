@@ -18,6 +18,7 @@
                <div class="dropdown-menu">
                   <a class="dropdown-item" data-toggle="modal" data-target="#add-mentor-modal">Add Mentor</a>
                   <a class="dropdown-item" data-toggle="modal" data-target="#add-mentee-modal">Add Mentee</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target="#add-bulk-mentee-modal">Add Bulk Mentee</a>
                </div>
             </div>
             <!-- Modal -->
@@ -116,7 +117,7 @@
                                  <select class="form-control" id="mentee-team">
                                     <% for(let i=0; i < teamList.length; i++) { %>
                                        <option value="<%=teamList[i].id %>">
-                                          <%=teamList[i].value %>
+                                          <%=teamList[i].name %>d
                                        </option>
                                        <% } %>
                                  </select>
@@ -131,6 +132,31 @@
                   </div>
                </div>
             </div>
+            <div class="modal fade" id="add-bulk-mentee-modal" tabindex="-1" role="dialog"
+               aria-labelledby="exampleModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Bulk Mentee</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="csvFile">Upload CSV File:</label>
+                           <input type="file" class="form-control-file" id="csvFile" accept=".csv">
+                        </div>
+                        <div class="opensans-md">To download csv template, click:</div>                        
+                        <button type="button" class="btn btn-success btn-sm" onclick="downloadCSVTemplate()"> <i class="fa fa-download" aria-hidden="true"></i> Download CSV Template</button>
+                     </div>
+                     <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="button" class="btn btn-primary" onclick="addBulkMentee()">Save changes</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
             <!-- Modal Ends -->
          </div>
          <div id="user-list-table">
@@ -141,17 +167,27 @@
    </div>
 </div>
 <script>
+   function downloadCSVTemplate(){
+    const csvContent = 'emailID,firstname,lastname';
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const element = document.createElement('a');
+    element.download = 'Bulk upload template.csv';
+    element.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+   }
+   
    $(document).ready(function () {
       const mentorTable = new DataTable("#mentor-table", {
          // data: data,
          ajax: {
-            url: "/api/users?userType=mentor",
+            url: "/api/users?userType=all",
             type: "GET",
             headers:{
                      Authorization: `Bearer ${sessionStorage.getItem('token')}`
                   },
             dataSrc: function (json) {
-               console.log({data:json.data})
                return json.data;
             },
          },
@@ -174,7 +210,13 @@
                },
             },
             { data: "emailID", title: "Contact", responsivePriority: 3, width: "20%" },
-            { data: "domain", title: "Domain", responsivePriority: 3, width: "20%" },
+            {
+               data: "lastname",
+               title: "User type",
+               render: (data, type, row, meta) => {
+                  return `${row.user_type == 1 ? 'Mentor' : 'Mentee'}`
+               },
+            },
             {
                data: "lastname",
                title: "Action",
@@ -241,5 +283,34 @@
             return;
          });
    };
+   async function addBulkMentee() {
+      const fileInput = document.getElementById('csvFile');
+      const file = fileInput.files[0];
+      if (!file) 
+         return demo.showNotification("left", "bottom", 'Please select a CSV file.')
+      
+      const formData = new FormData();
+      formData.append('bulk-upload-sheet', file);
+      formData.append('userType', 'mentee');
+      formData.append('bulkData', true);
+      try {
+         const uploadMetaData = JSON.stringify({userType:"mentee", bulkData:true})
+         const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
+         },
+            body: formData
+         });
+
+         if (!response.ok) {
+            throw new Error(`Failed to upload CSV file: ${response.statusText}`);
+         }
+         demo.showNotification("left", "bottom", 'Bulk mentee added successfully!')
+         $('#add-bulk-mentee-modal').modal('hide');
+      } catch (error) {
+         return demo.showNotification("left", "bottom", error.message)      
+      }
+   }
 
 </script>
