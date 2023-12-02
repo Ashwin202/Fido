@@ -34,6 +34,7 @@
         <div class="col-md-12">
           <div class="d-flex justify-content-end  ">
           </div>
+          <div class="opensans-xxxl text-center my-2">Eligible Events </div>
           <div id="event-list-table">
             <table class="table table-striped table-bordered custom-table" id="events-table"
               style="width:100%; white-space: nowrap;"></table>
@@ -68,7 +69,6 @@
                   Authorization: `Bearer ${sessionStorage.getItem('token')}`
                 },
                 dataSrc: function (json) {
-                  console.log({ data: json.data })
                   return json.data;
                 }
               },
@@ -87,7 +87,7 @@
                   data: "name",
                   title: "Full Name",
                   render: (data, type, row, meta) => {
-                    return `<a href='/mentor-dashboard/${row.id}'>${row.name}</a>`;
+                    return `<a style="color:#247881" href='/mentor-dashboard/${row.id}'>${row.name}</a>`;
                   },
                 }
               ]

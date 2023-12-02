@@ -18,42 +18,44 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
       <link rel="stylesheet" href="/assets/css/commonCSS.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-      <script src="/plugins/notification.js" charset="utf-8"></script>
-      <script src="/assets/js/common.js" charset="utf-8"></script>
+     
+     <script src="/plugins/notification.js" charset="utf-8"></script>
+     <script src="/assets/js/common.js" charset="utf-8"></script>
       <title>Dashboard-Mentor</title>
    </head>
 
    <body>
 <%- include('../partials/navBar.ejs') %>
-
-<div class="container">
+<div class="container card-rounded p-2 mb-5" style="background-color: #f6f4f8;">
+   <div class="opensans-xxxl text-center my-2">INSIGHTS </div>
    <div class="row">
-      <div class="col-md-8">
-         <div class="row">
+      <div class="col-md-12">
+         <div class="row animate__animated animate__bounce">
             <div class="col-md-4 mt-3 d-flex justify-content-center">
-               <div class="card-rounded opensans-lg" style="background: linear-gradient(to right, #e0c4ec, #ebd8f3); height: 150px; width:150px; padding: 8px;">
+               <div data-toggle="tooltip" data-placement="top" title="Total number of Mentors" class="card-rounded opensans-lg" style="background: linear-gradient(to right, #e0c4ec, #ebd8f3); height: 150px; width:150px; padding: 8px;">
                   <br>Mentors
-                  <p class="opensans-xxl text-center"><%- adminInsights.menteeCount %></p>
-               </div>
-            </div>
-            <div class="col-md-4 mt-3 d-flex justify-content-center">
-               <div class="card-rounded opensans-lg" style="background: linear-gradient(to right, rgb(173, 206, 226), #eeeaf0); height: 150px; width:150px; padding: 8px;">
-                  <br>Mentees
                   <p class="opensans-xxl text-center"><%- adminInsights.mentorCount %></p>
                </div>
             </div>
             <div class="col-md-4 mt-3 d-flex justify-content-center">
-               <div class="card-rounded opensans-lg" style="background: linear-gradient(to right, #beedcc, #ece7ef); height: 150px; width:150px; padding: 8px;">
+               <div data-toggle="tooltip" data-placement="top" title="Total number of Mentees" class="card-rounded opensans-lg" style="background: linear-gradient(to right, rgb(173, 206, 226), #eeeaf0); height: 150px; width:150px; padding: 8px;">
+                  <br>Mentees
+                  <p class="opensans-xxl text-center"><%- adminInsights.menteeCount %></p>
+               </div>
+            </div>
+            <div class="col-md-4 mt-3 d-flex justify-content-center">
+               <div data-toggle="tooltip" data-placement="top" title="Total number of live events" class="card-rounded opensans-lg" style="background: linear-gradient(to right, #beedcc, #ece7ef); height: 150px; width:150px; padding: 8px;">
                   <br>Live Events
                   <p class="opensans-xxl text-center"><%- adminInsights.activeEvent %></p>
                </div>
             </div>
          </div>
       </div>
-      <div class="col-md-4 p-0 mt-3">
-         <div class="opensans-xl text-center">Top 5 Events</div>
-         <div style="max-width: 100%"><canvas id="event-completion-chart"></canvas></div>
+      <div class="col-md-12 mt-3 ">
+         <div class="opensans-xxxl text-center my-2">Top 5 Events</div>
+         <div class="d-flex justify-content-center" style="max-width: 100%; height: 350px;"><canvas id="event-completion-chart"></canvas></div>
       </div>
 
       </div>
@@ -107,6 +109,14 @@ new Chart(ctx, {
   }
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll('.card-container');
+      cards.forEach((card, index) => {
+         setTimeout(() => {
+            card.classList.add('animate__bounce');
+         }, index * 200); 
+      });
+   });
       </script>
    </body>
 </html>

@@ -108,7 +108,7 @@
 
          </div>
          <div id="event-list-table">
-            <div class="opensans-xl text-center">Events </div>
+            <div class="opensans-xxxl text-center">Events List</div>
             <table class="table table-striped table-bordered custom-table" id="event-table1"
                style="width: 100%; white-space: nowrap"></table>
          </div>
@@ -201,7 +201,7 @@
             //    },
             // },
             { data: "name", title: "Event Name", render: (data, type, row, meta) => {
-                  return `<a href='/events-inner/${row.id}'>${row.name}</a>`;
+                  return `<a style="color:#247881" href='/events-inner/${row.id}'>${row.name}</a>`;
                }, },
                { data: "status", title: "Status", responsivePriority: 3, width: "20%" },
                { data: "created_at", title: "Created at", responsivePriority: 4, width: "20%" },

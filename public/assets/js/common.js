@@ -7,7 +7,6 @@ function logOut () {
     })
        .then((response) => response.json())
        .then((response) => {
-        alert(JSON.stringify(response))
            demo.showNotification("left", "bottom", response.message)
            if(!response.error){
                 sessionStorage.removeItem('token')
@@ -18,3 +17,5 @@ function logOut () {
         return;
        });
 }
+
+
