@@ -2,7 +2,7 @@
   <img width="250px" src="public/assets/img/Fido.png" alt="Description of your image">
   <h1 align="center">FIDO</h1>
   <p align="center">Mentorship and Event Management System</p>
-</p>
+
  <p align="center">
   <img  src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
   <img  src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="NodeJS">
@@ -11,6 +11,9 @@
 
 ## Introduction
 This project is a comprehensive Mentorship and Event Management System designed to streamline the administration of mentorship programs and facilitate the organization of events. With a user-friendly interface, administrators can effortlessly add mentors and mentees, either individually or in bulk through CSV uploads in a specified format.
+ <p align="center">
+<img width="750px" src="public/assets/img/Collage.png" alt="Project snapshot">
+</p>
 
 ## Key Features
 
